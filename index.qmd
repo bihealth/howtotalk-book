@@ -1,0 +1,81 @@
+# Introduction
+
+Please note: this brochure is a work in progress, barely started at this stage.
+The statistics chapter is largely ready, but others are at various stages.
+However, there still is the presentation ([https://bihealth.github.io/howtotalk](https://bihealth.github.io/howtotalk))
+which is actually where my idea started.
+
+## Who this book is for
+
+## Who am I to tell you this stuff?
+
+## Bioinformatics, statistics and computational biology
+
+We often refer to the whole general category of humans involved in
+biological data analysis using computers as "bioinformaticians". However,
+strictly speaking, bioinformaticians in the proper sense of the word are
+those who develop algorithms, databases and software packages. Then, there
+are those who use these tools to actual data, and the more precise term for
+these people is "computational biologists". Finally, there are those of us
+who walk around and criticize experimental designs and they are called
+statisticians.
+
+```{dot}
+#| fig-width: 12
+graph G {
+  layout = "neato"
+  fontname = "Helvetica,Arial,sans-serif"
+  scale = 1.2
+
+  node [
+		style = filled
+		color = "#000000"
+		fontname = "Helvetica,Arial,sans-serif"
+    fontsize = 10
+    shape = "box"
+	]
+
+  statistics [ fillcolor="#F8B229", style=filled, label="Statistics", fontsize=18 ]
+  bioinformatics [ fontcolor="white", fillcolor="#481567", style=filled, label="Bioinformatics", fontsize=18 ]
+  cbio [ fontcolor="white", fillcolor="#33638d", style=filled, label="Computational\nbiology", fontsize=18 ]
+
+  "Computers and science" [ fontcolor="white", fontsize=20, label = "Computers\nand\nScience" ]
+
+  "Computers and science" -- bioinformatics
+  "Computers and science" -- cbio
+  "Computers and science" -- statistics
+
+
+  subgraph Bioinformatics {
+    node [ style=filled, fillcolor="#481567cc", fontcolor="white", fontsize=14 ]
+    bioinformatics -- algorithms -- implementation
+    bioinformatics -- formalizations
+    bioinformatics -- standards
+    bioinformatics -- databases -- maintenance
+  }
+
+  subgraph cbio {
+      node [ fontcolor="white", fillcolor="#33638dcc", style=filled, fontsize=14 ]
+      cbio -- "data\nscience" -- "data\nstewardship"
+      cbio -- "functional\ngenomics"
+      "functional\ngenomics" -- "gene set\nenrichment"
+      cbio -- "using tools"
+      cbio -- "sequence\nanalysis" -- "phylogenies"
+  }
+
+  subgraph Statistics {
+      node [ fillcolor="#F8B22999cc", style=filled, fontsize=14 ]
+      statistics -- "hypothesis\ntesting"
+      "hypothesis\ntesting" -- "p-values"
+      "hypothesis\ntesting" -- "effect sizes"
+      statistics -- "power analysis"
+      statistics -- "linear\nmodeling" -- "hierarchical\nmodeling"
+      statistics -- "visualizations"
+      statistics -- "Bayesian\nstatistics"
+  }
+
+}
+```
+
+
+## What bioinformaticians like

@@ -1,0 +1,57 @@
+# Scientific Reproducibility
+
+
+
+
+
+## Reproducible workflows with Quarto or Rmarkdown
+
+```{mermaid}
+flowchart LR
+    A(Program + Text) -->|knitr/Quarto| B(Text with analysis results)
+    B --> C[LaTeX]
+    C --> CC[PDF]
+    B --> D[Word]
+    B --> E[HTML]
+    B --> F[Presentation]
+    B --> G[Book]
+```
+
+*This can be Rmarkdown, Quarto, Jupyter... the goal is that your code and
+your text are in one place, and the results of your calculations are
+entered automatically into the text.*
+
+
+```{r include=FALSE}
+pval <- 0.05
+```
+
+In systems such ar R markdown, you can put directly your
+analysis results in your text. For example, when I write that the
+$p$-value is equal to `r pval`, I am writing this:
+
+```markdown
+In systems such ar R markdown, you can put directly your
+analysis results in your text. For example, when I write that the
+$p$-value is equal to `​r pval`, I am writing this:
+```
+
+The $p$-value above is not entered manually (as 0.05), but is the result of
+a statistical computation. If the data changes, if your analysis changes,
+the $p$-value above will automatically change as well.
+
+Why is that a big deal? If you have ever written a manuscript or report,
+you probably know why: data change, analyses change, and each time a change
+happens, you have to go back to your manuscript and change every single
+occurence of the results, every figure, every table. Not only is that
+tedious, but it is also error-prone: you may forget to change one of the
+results, and then your manuscript is inconsistent with itself.
+
+But that is not all. The most important part of is that your entire
+analysis, every operation on your data, every step, every statistical test
+or choice you have made is *automatically* documented in your code. Take a
+look at the chapter [High throughput data analysis](htdata.html) in which
+you can find some figures and results generated from a real dataset. You
+can find the code corresponding to each figure and see precisely how I
+generated each result.
+

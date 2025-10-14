@@ -1,0 +1,58 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "How to talk to your bioinformatician"
+  author: "January Weiner"
+  date: "12/10/2025"
+  reader-mode: true
+  chapters:
+    - index.qmd
+    - statistics.qmd
+    - htdata.qmd
+    - reproducibility.qmd
+    - metadata.qmd
+    - wheretogo.qmd
+    - references.qmd
+  sidebar:
+    search: true
+    style: floating
+    border: true
+  navbar:
+    left:
+      - text: "Introduction"
+        href: "index.qmd"
+      - text: "Statistics"
+        href: "statistics.qmd"
+      - text: "High throughput data"
+        href: "htdata.qmd"
+      - text: "Reproducible research"
+        href: "reproducibility.qmd"
+      - text: "Preparing metadata"
+        href: "metadata.qmd"
+      - text: "Where to go from here"
+        href: "wheretogo.qmd"
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: 
+      light: cosmo
+      dark: darkly
+    fig-format: svg
+    code-fold: true
+    execute:
+      warning: false
+      message: false
+
+
+knitr:
+  opts_chunk:
+    dev: "svg"
+
+reference-location: margin
+
+
+

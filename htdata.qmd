@@ -1,0 +1,411 @@
+# High Throughput Data Analysis
+
+In the previous chapter, we touched on analysis of high throughput (HT) data.
+Here, we will spare some more time to discuss some of the strong and weak
+points of HT data.
+
+
+## Arnolfini and Venice
+
+
+::: {.aside}
+There are more connections of HT data to impressionism. A famous software
+package for HT data analysis is called Seurat – from the name ofa famous
+French painter, Georges Seurat. Seurat painted using the so called
+pointillism technique, where small dots of color are applied in patterns to
+form an image. The corresponding analysis package is used, among others, to
+visualize single cell RNA-seq data, where each of the thousands of dots
+represents a single cell. 
+:::
+
+## Exploratory vs Hypothesis-driven research
+
+
+## Statistics and HT
+
+### Correction for multiple testing / FDR
+
+If you are reading this book, you probably have heard about adjusted p
+values or FDRs (false discovery rates). What are they and why do we need
+them?
+
+Over a decade ago, a group of scientists bought a dead fish on a fish
+market and brought it back to the lab, where they put it into a functional
+MRI (fMRI) machine. Here is what they did:
+
+::: {.aside}
+Neural correlates of interspecies perspective taking in the post-mortem
+Atlantic salmon: An argument for proper multiple comparisons correction.
+[@bennett1wolford]
+:::
+
+
+> The task administered to the salmon involved completing an open-ended
+> mentalizing task. The salmon was shown a series of photographs depicting human
+> individuals in social situations with a specified emotional valence. The salmon was
+> asked to determine what emotion the individual in the photo must have been
+> experiencing.
+
+Yes, you read this correctly. They put a dead fish into an fMRI and then
+*asked it to look at photographs and to think*. And then they measured the
+brain activity of the salmon and, quite surprisingly, they did find some
+apparent activity in the brain of the fish.
+
+The problem was, you see, that at that time standard evaluation of fMRI
+involved performing a diabolical number of statistical tests, comparing
+voxels (3D pixels) between different conditions. And the standard way of
+determining which of them are significant was to use a simple (and lax)
+p-value threshold. The authors of the salmon study argued that this is not
+admissible, because you will always find some "significant" results, and
+argued for the use of multiple correction procedures[^salmon].
+
+[^salmon]: The authors of the salmon poster gained a lot of deserved attention with their
+stunt, culminating with an IgNobel prize in neuroscience in 2012. You can
+[still find their poster online](http://prefrontal.org/files/posters/Bennett-Salmon-2009.pdf).
+
+The problem of multiple testing is present throughout all of the high
+throughput data analysis techniques. Each time we do a statistical test
+with a predefined significance level (the notorious "$p < 0.05$"), we are
+trying to limit the occurence of false positive results (type I errors).
+Using p-values and a threshold of 0.05 means that we are willing to accept,
+on average, 1 false positive result in 20 tests. However, if we run just
+one RNA-seq experiment with one comparison, we will be doing something like
+10 to 20 *thousands* of statistical tests. In other words, at $p < 0.05$,
+we expect 500 to 1000 false positive results, even if there is no real
+difference between the conditions!
+
+That is why we need to employ a procedure to control the false positive
+rate[^fwers]. The widely used Benjamini-Hochberg procedure[^bh] aims at
+controlling the false discovery rate (FDR). The principle is as follows:
+among all genes for which the FDR is below 0.05, we expect at most 5% false
+positives. Similarly, if we only consider genes with FDR below 0.01, only
+1% of them are expected to be false positives. FDR is therefore not,
+strictly speaking, a p-value (even though we often call it "adjusted
+p-value" and use it as such).
+
+[^bh]: Described in
+one of the most highly cited papers ever, with an order of magnitude more
+citations than the Watson and Crick paper on the structure of DNA.
+
+[^fwers]: Actually, there are two general approaches: correcting the *family
+wise error rate* (FWER), which is the probability of making at least one
+type I error in a family of tests, and controlling the *false discovery
+rate* (FDR), which is the expected proportion of type I errors among the
+rejected hypotheses. Benjamini-Hochberg procedure is the latter, the
+Bonferroni correction is the former.
+
+However, the side effect of multiple testing correction is that it severly
+reduces the statistical power of the analysis. In other words, many genes
+that are actually differentially expressed will have an FDR above the
+threshold of 0.05, and we will not be able to detect them. Consider this:
+if you have 500 genes at FDR < 0.05, you expect that 25 of them are false
+positives - and therefore 475 are true positives, really differentially
+expressed. However, if at the same time you have 1500 genes at FDR < 0.1,
+it means that within these 1500 genes there are 150 false positives
+(additional 125 to the 25 already counted at FDR < 0.05), but also 1350
+true positives - an additional 875 true positives with FDR between 0.05 and
+0.1. These are true positives that we will miss at FDR < 0.05!
+
+The bottom line is that we control the type I error rate – the false
+positives – at the cost of increasing the type II error rate – the false
+negatives. This is a dirty compromise that we encounter in many places in
+statistics and machine learning[^sens], but it is exacerbated in the context of HT
+data analysis.
+
+[^sens]: And even medicine: if you raise the specificity of a test
+(minimizing false positives) you will lower its sensitivity (increasing
+false negatives) and vice versa. Screening tests typically aim at a high
+sensitivity (to catch all potential patients), but the cost is a low
+specificity – and that is why you should not worry too much about a
+positive result of mammography or PSA test without further confirmation.
+
+::: {.callout-important icon=false collapse=false appearance="simple"}
+Multiple testing correction is essential when analyzing HT data, but it
+severly reduces the statistical power of the analysis.
+:::
+
+
+
+### To log or not to log
+
+
+### The scourge of the absolute thresholds
+
+A question that often arises in the context of HT data analysis is: "so how
+many genes / proteins / metabolites are differentially expressed
+*exactly*?". For me as a bioinformatician, this question is not easily
+answered, and I will try to explain why. In the following, I will talk
+mostly about (bulk) RNA-seq data, but what I say applies to all kinds of HT
+data as well. In this context, we often say "DEGs" (differentially
+expressed genes) to refer to genes that are expressed at different levels in
+two or more conditions.
+
+But what *is* a DEG? How do you know a gene is a DEG? Quite often, we
+define the DEGs by the results of a statistical comparison we have made
+between two groups of samples. We define DEGs as those genes for which the
+FDR (false discovery rate) is below a certain threshold, e.g. 5% 
+($FDR < 0.05$). Why 5%? This comes from the common practice in statistics,
+but that does not make it any less arbitrary. We could use 1% or 10%, or
+even 2.7%. And depending how we choose the threshold, the number of DEGs
+will be different.
+
+But 5% has at least a certain meaning: it is an attempt to keep the
+fraction of false positives among the DEGs at a certain level, as explained
+in the previous section ("Correction for multiple testing"). However, we
+also add another arbitrary threshold: the absolute change of the log fold
+change. The problem is that the statistical power of the test to compare
+the results depends on the absolute expression level of a given gene.
+Simplifying the matter a bit, genes with high expression can be measured
+more confidently, so we can detect smaller changes in their expression.
+However, small changes in expression are often biologically not very
+interesting. Technically, we want to filter the DEGs not only based on
+statistical significance, but also on the effect size, i.e. the absolute change
+in expression.
+
+Quite often, we use a threshold of 2-fold change, at least a two-fold increase or
+two-fold decrease (which corresponds to an absolute log~2~ fold change of 1
+or more). Again, this is completely arbitrary^[Even more than the FDR,
+which is rooted in a hundred years of tolerating one mistake in 20.], and
+many people use different thresholds, or none at all. 
+
+And of course, the actual number of DEGs will depend on the thresholds you
+have chosen. This is why, when asked to provide the number of DEGs, I
+sometimes ask back: "how many would you like me to find?".
+
+However, given a particular definition in a paper or experiment, we could
+argue that the number of DEGs is well defined. This is true, but the
+problem starts when you actually try to pretend that the number of DEGs is
+informative and useful. Because my next question to you would be: what do
+you need the number of DEGs for? The truth is, it is often used as a proxy
+for the overall "amount of change". For example, you might try to compare
+the number of DEGs between different experiments. This is how it quickly is
+reported in papers: "we found 1234 DEGs in treatment A compared to
+controls, but only 567 in treatment B, demonstrating that treatment A has a
+stronger effect on gene expression than treatment B".
+
+Unfortunately, this may be completely misleading. First of all, the number
+of DEGs will strongly depend on the statistical power of the experiment. If
+in one comparison we are looking at a group of 10 samples vs 10 samples,
+and in the other we have only 3 vs 3 samples, even if the extent of
+regulation is the same in both comparisons, there will be fewer DEGs in the
+second comparison, simply because we have less statistical power to detect
+them.
+
+But even if we keep the sample size the same, the number of DEGs will
+depend on the overall variability of the data, on small errors in the
+preparation of the samples, on outliers etc etc. Yes, it is true that if
+the overall extent of regulation is higher, the number of DEGs will likely
+to be higher as well, but the reverse doesn't necessarily hold. In the
+following section, we will look at an example and alternative ways of
+getting an idea of the overall extent of regulation.
+
+::: {.callout-important icon=false collapse=false appearance="simple"}
+Avoid using absolute thresholds if possible. They are much less meaningful
+that they seam. Use meaningful visualizations instead, e.g. volcano plots,
+MA plots or disco plots.
+:::
+
+### DEGs and p-value trap: an example
+
+In the code below, I will use data which can be found in the GEO database
+under accession number [GSE156063](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE156063). 
+The expression data comes from patients who either suffered from COVID-19
+or another respiratory disease (it is the same data set that I used to
+demonstrate the incorrect use of Venn diagrams in a previous chapter). The
+code to generate the results and figures below is included in this book for
+your pleasure.
+
+
+```{r}
+#| label: libraries
+library(DESeq2)
+# the results are loaded from the output of DESeq2-based analysis of the
+# data set using a pipeline called sea-snap (see
+# github.com/bihealth/seasnap-pipeline) and loaded with the R package
+# Rseasnap.
+# However, we will only use the raw counts and the covariate table here.
+library(Rseasnap)
+library(tidyverse)
+library(ggplot2)
+library(cowplot)
+```
+
+```{r}
+#| label: load-data
+
+pip <- load_de_pipeline("DE_config.yaml")
+
+covar <- get_covariates(pip)
+cnts <- counts(get_deseq2(pip))
+```
+
+First, a little demonstration. We will run the same comparison, between
+non-COVID viral infection and non-viral controls, twice: once with 5 randomly
+selected samples per group, and once with 5 additional samples per group, and we will
+compare the results.
+
+
+```{r}
+#| label: deseq2-example
+
+# let us write a little function so that we don't have to repeat the same
+# code twice. The function runs DESeq2 on a selected subset of samples
+run_deseq2 <- function(covar, cnts, sel,
+                       contrast = c("group", "other", "no")) {
+  covar_sel <- covar[sel, ]
+  cnts_sel <- cnts[, sel]
+  ds <- DESeqDataSetFromMatrix(
+    countData = cnts_sel,
+    colData = covar_sel,
+    design = ~ group
+  )
+  ds <- DESeq(ds)
+  res <- results(ds, contrast = contrast)
+  as.data.frame(res)
+}
+
+covid <- which(covar$group == "SC2")
+no_covid <- which(covar$group == "no")
+other_resp <- which(covar$group == "other")
+
+# set the random number seed so you can reproduce the results
+set.seed(12345) 
+
+sel_5 <- c(sample(no_covid, 5), sample(other_resp, 5))
+res_5 <- run_deseq2(covar, cnts, sel_5)
+
+# add 5 more samples per group
+sel_10 <- c(sel_5, sample(setdiff(no_covid, sel_5), 5), 
+                   sample(setdiff(other_resp, sel_5), 5))
+res_10 <- run_deseq2(covar, cnts, sel_10)
+
+sel_10_covid <- c(sample(covid, 10), sample(other_resp, 10)) 
+res_10_covid <- run_deseq2(covar, cnts, sel_10_covid,
+                           contrast = c("group", "other", "SC2"))
+
+res_m <- merge(
+  res_5 %>% 
+    select(log2FC_5 = log2FoldChange, pval_5 = pvalue, padj_5 = padj) %>% rownames_to_column("gene"),
+  res_10 %>% 
+    select(log2FC_10 = log2FoldChange, pval_10 = pvalue, padj_10 = padj) %>% rownames_to_column("gene"),
+  by = "gene") |> merge(
+  res_10_covid %>% 
+    select(log2FC_10_covid = log2FoldChange, pval_10_covid = pvalue, padj_10_covid = padj) %>% rownames_to_column("gene"),
+  by = "gene"
+)
+```
+
+At FDR < 0.05 and with a 2-fold change threshold ($abs(log2FC) > 1$), we find
+`r sum(res_m$padj_5 < 0.05 & abs(res_m$log2FC_5) > 1, na.rm=TRUE)` DEGs with 5 samples per group,
+but `r sum(res_m$padj_10 < 0.05 & abs(res_m$log2FC_10) > 1, na.rm=TRUE)` DEGs with
+10 samples per group. This is quite a difference! I have seen papers in
+which much finer differences in the number of DEGs were used to argue that
+one condition has a stronger effect on gene expression than another. But
+are the results really that different? Let us take a look at the volcano
+plots, which show the log fold change on the x-axis and the negative log10 of
+the p-value on the y-axis[^logpval].
+
+[^logpval]: The negative log10 of the p-value is used so that small
+p-values (which we are interested in) are more clearly distninguished. 
+
+
+```{r}
+#| label: fig-volcano-plot
+#| fig-cap: |
+#|         Volcano plots for the comparison of non-COVID viral infection vs
+#|         non-viral controls with 5 samples per group (left) and 10
+#|         samples per group (right)."
+#| fig-width: 10
+#| fig-height: 5
+
+df <- rbind( res_5 |> rownames_to_column("gene") |> mutate(set = "5 samples
+            / group"), res_10 |> rownames_to_column("gene") |> mutate(set =
+            "10 samples / group")) |> mutate(significant = ifelse(padj <
+0.05 & abs(log2FoldChange) > 1, "yes", "no"))
+
+ggplot(df, aes(x = log2FoldChange, y = -log10(padj))) +
+  geom_point(aes(color = significant), alpha = 0.1) +
+  scale_color_manual(values = c("no" = "black", "yes" = "#880000")) +
+  geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "red") +
+  geom_vline(xintercept = c(-1, 1), linetype = "dashed", color = "blue") +
+  facet_wrap(~set) +
+  xlab("log2 fold change") +
+  ylab("-log10 adjusted p-value") +
+  theme_minimal()
+```
+
+As you can see, there is hardly a big difference. Despite the difference in
+the absolute number of DEGs, the actual volcano plots are quite similar. We
+can further show that on a plot directly comparing the log~2~ fold changes.
+In addition, we will color the genes with a score that combines p-values
+and log~2~ fold changes, so called "disco" (discordance / concordance)
+score. Genes that show similar behavior in both comparisons come up red,
+while genes that go into opposite directions are blue. 
+
+::: {.aside}
+Concordant and discordant gene expression patterns in mouse strains
+identify best-fit animal model for human tuberculosis
+[@domaszewska2017concordant]
+:::
+
+In addition, to better appreciate the similarity of the results for 5 and
+10 samples, on the other panel of the same figure I will throw another
+comparison into the mix: again with 10 samples per group, but this time
+COVID-19 patients vs non-viral controls.
+
+
+```{r}
+#| label: fig-disco
+#| fig-width: 12
+#| fig-height: 6
+#| fig-cap: |
+#|        Disco plots comparing log2 fold changes. Left: comparison of 5
+#|        samples per group vs 10 samples per group for non-COVID viral
+#|        infection vs non-viral controls. Right: comparison of 10 samples
+#|        per group for COVID viral infection vs non-viral controls.
+#|
+
+# cutoff threshold for disco score
+dthr <- 20
+
+# calculate disco scores
+res_m <- res_m |>
+  mutate(disco_5_10 = log2FC_5 * log2FC_10 * abs(log10(pval_5) + log10(pval_10)),
+         disco_5_10_covid = log2FC_5 * log2FC_10_covid * abs(log10(pval_5) + log10(pval_10_covid))) |>
+  mutate(disco_5_10 = ifelse(abs(disco_5_10) > dthr, sign(disco_5_10) * dthr, disco_5_10),
+         disco_5_10_covid = ifelse(abs(disco_5_10_covid) > dthr, sign(disco_5_10_covid) * dthr, disco_5_10_covid))
+
+p1 <- ggplot(res_m, aes(x = log2FC_5, y = log2FC_10, color = disco_5_10)) +
+  geom_point(alpha = 0.3) +
+  scale_color_gradient2(low = "blue", mid = "grey", high = "red", midpoint = 0) +
+  xlab("log2 fold change (5 samples / group)") +
+  ylab("log2 fold change (10 samples / group)") +
+  theme_minimal() +
+  ggtitle("Comparison of non-COVID viral infection vs non-viral controls") +
+  theme(legend.position = "none") +
+  xlim(c(-6, 6)) + ylim(c(-6, 6)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black")
+
+p2 <- ggplot(res_m, aes(x = log2FC_10, y = log2FC_10_covid, color = disco_5_10_covid)) +
+  geom_point(alpha = 0.3) +
+  scale_color_gradient2(low = "blue", mid = "grey", high = "red", midpoint = 0) +
+  xlab("log2 fold change (10 samples / group, non-COVID vs no)") +
+  ylab("log2 fold change (10 samples / group, COVID vs no)") +
+  theme_minimal() +
+  ggtitle("Comparison of COVID-19 vs non-viral controls") +
+  theme(legend.position = "none") +
+  xlim(c(-6, 6)) + ylim(c(-6, 6)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black")
+
+plot_grid(p1, p2, ncol = 2)
+```
+
+
+As you can see, the results obtained for 5 and 10 samples per group are
+basically identical (Pearson's $r$ is 
+`r cor(res_m$log2FC_5, res_m$log2FC_10, use="complete.obs") |> format.pval(digits=2)`). 
+On the other hand, it is clear that the comparison of COVID-19 with
+non-viral disease, while similar, yields different results (Pearson's $r$ is
+`r cor(res_m$log2FC_10, res_m$log2FC_10_covid, use="complete.obs") |> format.pval(digits=2)`).
+
+
