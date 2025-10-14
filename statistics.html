@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Statistics – How to talk to your bioinformatician</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./htdata.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8b864f0777c60eecff11d75b6b2e1175.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c1d9af552ebac5d803f7b5e8fd20226d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-b2340b7e8b770deaa698c097e3f09423.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">How to talk to your bioinformatician</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./statistics.html"> 
+<span class="menu-text">Statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./htdata.html"> 
+<span class="menu-text">High throughput data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reproducibility.html"> 
+<span class="menu-text">Reproducible research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./metadata.html"> 
+<span class="menu-text">Preparing metadata</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./wheretogo.html"> 
+<span class="menu-text">Where to go from here</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./statistics.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./htdata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">High Throughput Data Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Scientific Reproducibility</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metadata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preparing Meta Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wheretogo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Where to go from here</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#we-are-all-bayesians" id="toc-we-are-all-bayesians" class="nav-link active" data-scroll-target="#we-are-all-bayesians"><span class="header-section-number">2.1</span> We are all Bayesians</a></li>
+  <li><a href="#how-to-understand-p-values" id="toc-how-to-understand-p-values" class="nav-link" data-scroll-target="#how-to-understand-p-values"><span class="header-section-number">2.2</span> How to understand p-values</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-p-value" id="toc-what-is-a-p-value" class="nav-link" data-scroll-target="#what-is-a-p-value"><span class="header-section-number">2.2.1</span> What is a p-value?</a></li>
+  <li><a href="#statistical-tests-make-assumptions" id="toc-statistical-tests-make-assumptions" class="nav-link" data-scroll-target="#statistical-tests-make-assumptions"><span class="header-section-number">2.2.2</span> Statistical tests make assumptions</a></li>
+  <li><a href="#assumption-of-independence" id="toc-assumption-of-independence" class="nav-link" data-scroll-target="#assumption-of-independence"><span class="header-section-number">2.2.3</span> Assumption of independence</a></li>
+  </ul></li>
+  <li><a href="#problems-with-p-values" id="toc-problems-with-p-values" class="nav-link" data-scroll-target="#problems-with-p-values"><span class="header-section-number">2.3</span> Problems with p-values</a>
+  <ul class="collapse">
+  <li><a href="#p-values-have-limited-informative-value" id="toc-p-values-have-limited-informative-value" class="nav-link" data-scroll-target="#p-values-have-limited-informative-value"><span class="header-section-number">2.3.1</span> P-values have limited informative value</a></li>
+  <li><a href="#absence-of-evidence-is-not-evidence-of-absence" id="toc-absence-of-evidence-is-not-evidence-of-absence" class="nav-link" data-scroll-target="#absence-of-evidence-is-not-evidence-of-absence"><span class="header-section-number">2.3.2</span> Absence of evidence is not evidence of absence</a></li>
+  <li><a href="#difference-between-statistically-significant-and-non-significant-is-not-significant" id="toc-difference-between-statistically-significant-and-non-significant-is-not-significant" class="nav-link" data-scroll-target="#difference-between-statistically-significant-and-non-significant-is-not-significant"><span class="header-section-number">2.3.3</span> Difference between statistically significant and non-significant is not significant</a></li>
+  <li><a href="#spurious-results-can-be-very-convincing" id="toc-spurious-results-can-be-very-convincing" class="nav-link" data-scroll-target="#spurious-results-can-be-very-convincing"><span class="header-section-number">2.3.4</span> Spurious results can be very convincing</a></li>
+  <li><a href="#statistically-significant-is-not-the-same-as-significant" id="toc-statistically-significant-is-not-the-same-as-significant" class="nav-link" data-scroll-target="#statistically-significant-is-not-the-same-as-significant"><span class="header-section-number">2.3.5</span> Statistically significant is not the same as significant</a></li>
+  <li><a href="#we-treat-p-values-with-too-much-reverence" id="toc-we-treat-p-values-with-too-much-reverence" class="nav-link" data-scroll-target="#we-treat-p-values-with-too-much-reverence"><span class="header-section-number">2.3.6</span> We treat p-values with too much reverence</a></li>
+  </ul></li>
+  <li><a href="#what-to-do-with-p-values" id="toc-what-to-do-with-p-values" class="nav-link" data-scroll-target="#what-to-do-with-p-values"><span class="header-section-number">3</span> What to do with p-values</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="we-are-all-bayesians" class="level2 page-columns page-full" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="we-are-all-bayesians"><span class="header-section-number">2.1</span> We are all Bayesians</h2>
+<p>When talking about statistics to students, I like to show a simple coin trick. It isn’t really a trick at all, but for me realizing what it shows for the first time completely changed the way how I understand the whole field.</p>
+<p>Imagine that I put a coin on a table, heads up. The first question I ask you is: what is the probability that the coin is heads up? What is the probability that the coin is tails up? You can clearly see that the coin is heads up, so you tell me that the first probability - heads up - is 100%, and the probability that it is tails up is 0%.</p>
+<p>I take the coin in my hand and as I am about to throw it in the air I ask you what is the probability that it lands heads up. Usually you will say 50%. That is an obvious answer. But now, I actually throw the coin, catch it and land it on my hand - but I still cover it with my hand, so none of us can see how the coin landed. I ask you again: what is the probability that the coin shows heads? Now you might start to get suspicious, but the answer is still pretty much obvious: 50%, 1:1.</p>
+<p>OK, but now the plot thickens. I raise my hand just a bit and take a peek on the coin. You still can’t see it, but I exclaim: “AHA!” - I know already how it landed. I ask my question again: what is the probability that it landed heads up? Maybe you tell me: it is still 50%. But wait, I have already seen whether it is heads up, right? For me the situation is the same as at the very beginning, when the coin was still on the table. So <em>for me</em>, it is either 0% - if it landed tails up - or 100%, if it showing heads?</p>
+<p>But how can probability be <em>relative</em>? Can it be relative at all?</p>
+<p>The answer is, maybe surprisingly: <strong>it can’t</strong>. At least not in the “regular”, frequentist statistics - the one that we use in most of our scientific papers. In fact, the very moment that the coin landed, the probability was 0 or 100%, whether we were aware of it or not.</p>
+<p>That is why, in classical statistics, the p-values are not really to tell us any probability about our particular statistical test! If we were to compare two groups with a t-test, then either there are differences between the groups or there aren’t any - the coin has already landed, the probability is either 0% or 100%. What the p-values are meant to do is to keep is from making a mistake (specifically, a type I error) <em>in the long run</em>. However, whether we made a mistake or not is, in a particular case, 0% or 100%, we just don’t know which one. However, we can be reasonably confident that the percentage of such mistakes in our research will be less than 5% (or whichever p-value threshold we choose).</p>
+<p>Our intuition was therefore wrong… but was it, really?</p>
+<p>It turns out – it was wrong, but only in the classic, frequentist statistics. However it was dead on right from the point of view of Bayesian statistics. In Bayesian statistics, probability is a measure of information. We start with a rough idea based on some prior knowledge - that the coins are generally fair and land 50% of the time showing heads. We do an experiment, and we <em>update</em> this knowledge by observing that it landed actually showing heads, and we increase the probability to 100%. Until we make the observation, we keep the prior - whether the coin has already landed or not, as long we don’t know how it landed, the probability is still 50%. Thus, our intuition is definitely bayesian.</p>
+<p>This makes for an interesting conundrum: we normally <em>use</em> frequentist statistics, but we <em>think</em> in bayesian terms. This has profound and unfortunate consequences, because p-values are a part of the language of science. We use p-values and statistical hypothesis testing on a regular basis to communicate with other researchers, to tell them something about our results, but this language is unintuitive and poorly understood by many.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>One of the reasons that the “frequentist” hypothesis testing is so firmly established is that bayesian statistics requires way more computing resources, which only relatively recently became widely available to statisticians.</p>
+</div></div><p>Is the Bayesian statistics “more correct” than the frequentist approach? There is no easy answer to this question. The debates between frequentist statisticians and bayesians can actually get quite heated at times. However, whatever our views on frequentists statistics are, the majority of the scientific papers will still involve p-values of some sort of another, and that means that you need to understand what p-values are.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Frequentist Statistics</strong></th>
+<th><strong>Bayesian Statistics</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="images/classicalgiants.png" class="img-fluid"></td>
+<td><img src="images/thomas-bayes.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>1. Probability is defined as the long-run frequency of events</td>
+<td>1. Probability represents a degree of belief or certainty about an event</td>
+</tr>
+<tr class="odd">
+<td>2. Parameters (like the “true value”) are fixed but unknown quantities.</td>
+<td>2. Parameters are treated as random variables with their own probability distributions.</td>
+</tr>
+<tr class="even">
+<td>3. Asking about the probability of a hypothesis does not make sense</td>
+<td>3. Asking about the probability of a hypothesis is the main goal</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, let us talk about what p-values are, what their drawbacks are and what we can do about it.</p>
+</section>
+<section id="how-to-understand-p-values" class="level2 page-columns page-full" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="how-to-understand-p-values"><span class="header-section-number">2.2</span> How to understand p-values</h2>
+<section id="what-is-a-p-value" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="what-is-a-p-value"><span class="header-section-number">2.2.1</span> What is a p-value?</h3>
+<p>Say you want to run a statistical test - such as a t test - to decide whether two groups differ. You want to distinguish between two possibilities:</p>
+<ol type="1">
+<li>There are no differences between the groups</li>
+<li>There are differences between the groups</li>
+</ol>
+<p>We call the former situation <span class="math inline">\(H_0\)</span> or the null hypothesis, and the latter (there are differences), the <span class="math inline">\(H_1\)</span> or the alternative hypothesis.</p>
+<p>Say you run the test, and you got a p-value of 0.02. What does that mean? P-value is a probability (this is where the p in “p-value” comes from), but it is the probability of what, exactly?</p>
+<p>Take a moment and try to answer this question. Chances are, your answer is one of these:</p>
+<ol type="1">
+<li>Probability that <span class="math inline">\(H_0\)</span> is true (probability that there is no difference), given the data</li>
+<li>Probability that <span class="math inline">\(H_1\)</span> is true (probability that there is a difference), given the data</li>
+<li>Probability that the data is random</li>
+<li>Probability that the observations are due to random chance</li>
+<li>Probability of getting the same data by random chance</li>
+</ol>
+<p>If your answer is above, I have good and bad news. The bad news is that you are wrong, because the correct answer is not among the answers above. The good news is that you are in a good company, research shows that something like half of the scientists using p-values don’t really understand them. Oh wait, that means that a lot of scientists don’t understand p-values, that can’t be good - I guess I have only bad news for you, then.</p>
+<p>For the purposes of this discussion, we can simplify a formal definition to the following:</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>P-value is the probability of observing an effect at least as extreme (as the one we observed) given that <span class="math inline">\(H_0\)</span> is true</strong>.</p>
+</div>
+</div>
+</div>
+<p>In other words, <em>assuming</em> that there are no differences, but keeping all our other assumptions about the data (for example, how it is distributed), we ask what is the probability of getting data that show the same or larger differences between the groups?</p>
+<p>Let us dive in it a bit deeper.</p>
+<p>When you run a t-test, you calculate the so-called t statistic. It is the measure of the difference between the groups that we observe. It takes into account the differences and how many data points we have. What we do in the t-test we are assuming that there are no differences between the group, and ask, how likely it is to get a t value equal or larger to the one that we got under this assumption.</p>
+</section>
+<section id="statistical-tests-make-assumptions" class="level3 page-columns page-full" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="statistical-tests-make-assumptions"><span class="header-section-number">2.2.2</span> Statistical tests make assumptions</h3>
+<p>As you can see, this definition of p-value I have included here is closest to the last of the wrong answers I have written out before – “probability of getting the same data by random chance”. However, there is a subtle but extremely important difference between the formulations, and I don’t mean that one uses “same data” and the other uses “an effect at least as extreme”. What I am talking about is that we are not looking at <em>random</em> data. The effects that we calculate under <span class="math inline">\(H_0\)</span> must fullfill a lot of assumptions of the statistical test.</p>
+<p>You probably heard of one of this assumptions - the assumption of <em>normality</em>. Parametric tests such as the t-test assume that the data is (roughly) normally distributed. If your data is not normally distributed – and a lot of biological data is not normally distributed – then this assumption is violated, and the p-value is calculated based on a model that does not fit our data.</p>
+<p>However, we could successfully argue that, in fact, <em>no real data is normally distributed</em>. Consider such a trait as the height of a human being. This is one of the traits that are <em>par excellence</em> the examples of normally distributed data. However, an actually normal variable can take any value with a certain, non-zero probability. In other words, there should be a non-zero probability of having a human being with height, say, 10 kilometers, or maybe have a negative length of -20 cm. Which, of course, doesn’t make any sense.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p><strong>Normality testing.</strong> You can test the data for normality. However, you need to be cautious. First, without enough samples, you will never be able to reject the assumption of normality. And if you have a lot of samples, you will almost always reject the assumption of normality. In other words, whether you reject the assumption of normality or not depends to some extent on your number of samples. Some statisticians, myself included, think that testing for normality of the data is therefore a waste of time.</p>
+</div></div><p>However, we know that many parametric tests – such as t-test and ANOVA – ara actually fairly robust when it comes to the violation of normality. In other words, you can safely use them with data which is not really normally distributed. This is one of these things that make statisticians remember the famous quote of George E. P. Box: “All models are wrong, but some are useful”.</p>
+<p>However, there are also other assumptions, of which one of the most important ones is the assumption of <em>independence</em>.</p>
+</section>
+<section id="assumption-of-independence" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="assumption-of-independence"><span class="header-section-number">2.2.3</span> Assumption of independence</h3>
+<p>This actually happened: I have been comparing the transcriptomes of two groups of people, healthy controls and patients suffering from a disease. What I saw was a large number of genes related to sex chromosomes. When I got the full meta-data of the project, it turned out that while the patients were 90% male, almost all of the healthy controls were health care workers, primarily nurses – in other words, females.</p>
+<p>Such a setup violates the assumption of independence: that each measurement is independent of other measurements. This makes any results of statistical hypothesis testing in this setup unreliable, whatever test you are using, whether it is parametric or not etc.</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Assumption of independence is really, <em>really</em> important.</p>
+</div>
+</div>
+</div>
+<p>One way of dealing with that is to use the sex of the individual as another coefficient in the model. This has the drawback of making the model more complex and decreasing your statistical power, but is otherwise a good way to proceed. Unless, of course, all the males are in one group, and all the females are in the other – in such a case there is no good way to study the data. You just wasted a lot of time and money.</p>
+<p>Another way that the assumption of independence is typically violated is a batch effect. Some technologies are more prone to batch effects than others, and you should always attempt to preemptively plan your experiments in a way that minimizes potential batch effects. One such technique is randomization – you randomly assign your samples to batches, so batches and groups do not correlate.</p>
+<p>While batch effects can be removed to a certain degree – and there are specialized tools for that – this never works to a 100%, and even when it works, it will not help you with a botched experiment design, in which groups and batches coincide.</p>
+</section>
+</section>
+<section id="problems-with-p-values" class="level2 page-columns page-full" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="problems-with-p-values"><span class="header-section-number">2.3</span> Problems with p-values</h2>
+<p>P-values have all sorts of problems. Some of them are inherent and the result of p-value properties. Others are due to how we handle them.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>The ASA statement on p-values: context, process, and purpose <span class="citation" data-cites="wasserstein2016asa">(<a href="references.html#ref-wasserstein2016asa" role="doc-biblioref">Wasserstein and Lazar 2016</a>)</span></p>
+</div></div><section id="p-values-have-limited-informative-value" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="p-values-have-limited-informative-value"><span class="header-section-number">2.3.1</span> P-values have limited informative value</h3>
+<p>What would you say if I told you that p-values are not informative about your specific experiment that you are considering? As we discussed, p-values are calculated assuming that there is no effect – for example, no difference between the groups. However, when we find that <span class="math inline">\(p &lt; 0.05\)</span>, we <em>reject</em> the <span class="math inline">\(H_0\)</span>. The p-value is then calculated based on an assumption that <em>was rejected</em>, that we decided is not real. In our world (in which there <em>is</em> a difference between the groups), the p-value does not describe any reality. It belongs to an <em>alternate</em> world, in which there was no difference between the groups.</p>
+<p>However, what p-values definitely do in a reasonable way is to control the <em>false discovery rate</em>. While it can be argued (as above) that p-values are not informative for the particular experiment we are considering, using p-values protects you from too many false positives <em>in the long run</em>. It works as follows: even assuming no effect (no differences between the groups), there is a certain probability of observing large differences once in a while. By carefully considering this possibility with p-values we are attempting to make sure that this rare events do not fool us more than once in 20 times (which corresponds to the p-value threshold of 0.05).</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>P-values control they <em>false positive rate</em> (type I error rate). This is all they do.</p>
+</div>
+</div>
+</div>
+<p>However, p-values are not XXX</p>
+</section>
+<section id="absence-of-evidence-is-not-evidence-of-absence" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="absence-of-evidence-is-not-evidence-of-absence"><span class="header-section-number">2.3.2</span> Absence of evidence is not evidence of absence</h3>
+<p>The very name “type I error” suggests that there is another, second type of error. Indeed there is: the type II error. While the type I error is getting a false positive – concluding a difference where there isn’t one – the other side of the coin is doing the opposite – concluding a <em>lack</em> of difference when there is, in fact, a difference. This is called a <em>false negative</em>.</p>
+<p>The bad news is, p-values do absolutely nothing to help with controling the false negative rate. The even worse news is that these errors are really, really common. You have probably heard of “statistical power”: that is exactly the ability of a statistical test to avoid false negative errors. It turns out that even for most powerful tests in best possible settings this power rarely exceeds 80%: in other words, 20% of <em>true</em> differences are never discovered!</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Lack of statistical significance does not “prove” that there is no difference. Instead of saying “there was no difference” say “we failed to detect a statistically significant difference”.</p>
+</div>
+</div>
+</div>
+<p>This has several practical consequences. One of the most important is that the fact that the difference between the groups was not statistically significant does not mean that there is no difference.</p>
+</section>
+<section id="difference-between-statistically-significant-and-non-significant-is-not-significant" class="level3 page-columns page-full" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="difference-between-statistically-significant-and-non-significant-is-not-significant"><span class="header-section-number">2.3.3</span> Difference between statistically significant and non-significant is not significant</h3>
+<p>Andrew Gelman coined the phrase “the difference between statistically significant and non-significant is not, itself, statistically significant”. What it means is this: if in one comparison you get a statistically significant difference, and in the other one you see that there is no significant difference, then you cannot conclude that the there is a difference between comparisons.</p>
+<p>Oh my, I think I have utterly confused you now. I think, however, that the problem is important and worth looking into, because while it is a surprisingly common way of reasoning, it is utterly wrong and can lead you astray.</p>
+<p>Consider this. You have two strains of mice, a wild type (WT) and a knockout. Your hypothesis is that while in the WT the regulation of a cytokine production works correctly and the cytokine gets produced upon stimulation, the regulation is broken in the KO. You plan your experiment as follows: for each of the mouse strains, you have a control (Ctrl) and a treatment (Trt) group, and your response variable is the level of the cytokine you have measured.</p>
+<p>Now to evaluate your experiment, you compare Ctrl with Trt in the WT strain and also in the KO strain. You have two comparisons: in WT (<span class="math inline">\(\Delta\)</span><sub>WT</sub> = Trt<sub>WT</sub> - Ctrl<sub>WT</sub>) and in KO (<span class="math inline">\(\Delta\)</span><sub>KO</sub> = Trt<sub>KO</sub> - Ctrl<sub>KO</sub>). In both cases, you run a t-test. You find that the p-value from the first comparison (<span class="math inline">\(\Delta\)</span><sub>WT</sub>) is significant (<span class="math inline">\(p &lt; 0.05\)</span>), and the p-value from the second comparison (<span class="math inline">\(\Delta\)</span><sub>KO</sub>) is not (<span class="math inline">\(p &gt; 0.05\)</span>). Does that mean that you confirmed your hypothesis? Can you say that there is no difference in KO, but there is a difference in WT?</p>
+<p>The short answer is: <strong>no, you can’t</strong>.</p>
+<p>You were able to show that there is a significant difference in the WT strain, but you <em>failed</em> to show that there is a difference in the KO. And failing to show a difference is not the same as showing <em>a lack</em> of difference. This is erronous reasoning is widely spread – a while ago a team of researchers looked at bunch of publications and found that almost half of the scientists that could make this error, did it.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Erroneous analyses of interactions in neuroscience: a problem of significance <span class="citation" data-cites="nieuwenhuis2011erroneous">(<a href="references.html#ref-nieuwenhuis2011erroneous" role="doc-biblioref">Nieuwenhuis, Forstmann, and Wagenmakers 2011</a>)</span>.</p>
+</div></div><p>So what should we do instead? In fact we have to run a <em>single</em> statistical test. We have the differences in KO (<span class="math inline">\(\Delta\)</span><sub>KO</sub>), and the differences in the WT (<span class="math inline">\(\Delta\)</span><sub>WT</sub>), and we need to test whether <em>these differences differ</em>, whether <span class="math inline">\(\Delta_{KO} \neq \Delta_{WT}\)</span>. This <em>difference of differences</em> is called, in statistics, <em>interaction</em>. To put it in a slightly more formal way, you have a 2-factor experiment (with one factor being the mouse strain, KO or WT, and the other being the treatment or lack thereof) and what you need to test is the interaction between the two factors.</p>
+<p>The bad news (I seem to be the bringer of bad news all throughout this chapter) is that this test for interaction is much weaker (in terms of statistical power) than a simple comparison between two groups. That means that in order to have the same chance to detect a real effect as in the case of a simple comparison, you have to use many more samples.</p>
+<p>But wait, there’s more. More bad news to come.</p>
+</section>
+<section id="spurious-results-can-be-very-convincing" class="level3 page-columns page-full" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="spurious-results-can-be-very-convincing"><span class="header-section-number">2.3.4</span> Spurious results can be very convincing</h3>
+<p>One of the most common applications of high throughput sequencing is RNA-Seq, in which we look at transcriptomes (so, expression of thousands of genes at once) in some samples. Quite frequently, one needs to use a two factor design, for example comparing control and treatment groups in either KO or WT strains. The correct way of analysing such an experiment is, as mentioned, testing for a significant interaction. However, quite frequently the analysis is done differently.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Venn diagrams may indicate erroneous statistical reasoning in transcriptomics <span class="citation" data-cites="weiner2022venn">(<a href="references.html#ref-weiner2022venn" role="doc-biblioref">Weiner 3rd, Obermayer, and Beule 2022</a>)</span>.</p>
+</div></div><p>I have followed that different approach in a paper I wrote a few years ago. I used gene expression data from both COVID-19 patients and non-COVID-19 patients. In each of these two groups (C19 and non-C19) there were two groups of patients, which I will call for now <em>G1</em> and <em>G2</em> (I will tell you what they are in a few moments). The question was: is the difference between COVID-19 patients and non-COVID-19 patients influenced by whether the patients belong to G1 or G2? In other words, does it matter for COVID-19 if you are a G1 or a G2 patient? For example, is COVID-19 more severe in G1? Are immune responses different for G1 patients than for G2 patients?</p>
+<p><img src="images/fig1-1.jpeg" class="img-fluid"></p>
+<p>What you see on the top left on the figure above is a <em>Venn diagram</em>. It shows the number of genes which are significantly different between COVID-19 and non-COVID-19 patients in G1 and in G2, respectively. We can see that 431 genes are specifically different in G1 only, and 278 are specifically different in G2 only, while only 132 are common for the two groups. When you run gene set enrichment on these G1- or G2-specific genes, you will find different facets of the immune responses, like TLR-4 signalling in G1 and IL-7 mediated signalling in G2. It would be really easy to write a paper on how the groups G1 and G2 shape the immune responses to COVID-19. So not only we see that G1 and G2 differ, but we also see that these differences make biological sense.</p>
+<p>The problem is that G1 and G2 are random samples from the same population. I have pulled these samples from one large group by random! There are absolutely no real differences between G1 and G2. And yet it was easy for me to find apperent differences, show them on a nice plot and even attribute certain specific biological processes to them. How did I do it?</p>
+<p>Start with the “specific” genes. What does it mean that a gene is in the group of 431 genes “specific” for G1? It means that it was significant in the comparison between COVID-19 and non-COVID-19 in G1, but was not significant in G2. But as I mentioned before, the fact that it was significant does not mean that it was not <em>different</em> in G2 or that it is specific for G1. Perhaps the p-value was 0.049 for G1 and 0.051 in G2, and the actual differences in G1 and G2 were similar.</p>
+<p>But if all that we are seeing on the Venn diagram is white noise, how come we have these beautiful and meaningful gene set enrichment terms? The point is that not only genes not significant in G2 may, in fact, also differ between COVID-19 and non-COVID-19 patients, albeit we fail to detact this fact; they are also very likely to be also genes which are involved in the immune responses. If a gene is related to the IL-7 mediated signalling and is significantly different in G2, it will increase the chance of detecting this pathway in G2. However, the very same gene is likely to also be regulated in G1, but our failure to detect it - because of lack of statistical power or because of random noise – means that we can’t identify the IL-7 pathway in G1. That does not, however, mean that it is not there.</p>
+<p>The correct analysis in this case is, as mentioned before, analysis of interactions. If done correctly, the analysis does not show any differences between G1 and G2.</p>
+</section>
+<section id="statistically-significant-is-not-the-same-as-significant" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="statistically-significant-is-not-the-same-as-significant"><span class="header-section-number">2.3.5</span> Statistically significant is not the same as significant</h3>
+</section>
+<section id="we-treat-p-values-with-too-much-reverence" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="we-treat-p-values-with-too-much-reverence"><span class="header-section-number">2.3.6</span> We treat p-values with too much reverence</h3>
+<p>chasing of 0.05, p-value hacking and cherry picking</p>
+</section>
+</section>
+<section id="what-to-do-with-p-values" class="level1 page-columns page-full" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> What to do with p-values</h1>
+<p>In the previous sections I have shown many problems with p-values and their interpretation. So what should we do about them? Should we abandon them completely?</p>
+<p>This is neither possible nor advisable. Of course, you will find a multitude of views and opinions, also among statisticians. There are journals out there which <em>forbid</em> to publish p-values. However, while most statisticians don’t go so far, they more or less agree that p-values are at best useful, but severely limited tools.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>The ASA statement on p-values: context, process, and purpose <span class="citation" data-cites="wasserstein2016asa">(<a href="references.html#ref-wasserstein2016asa" role="doc-biblioref">Wasserstein and Lazar 2016</a>)</span></p>
+</div></div><p>The idea is then not so much to remove p-values from science, but to put less stress on the p-values alone and rely more on additional information, such as effect sizes and confidence intervals. In fact, no statistical test should be reported as a p-value alone, but should always be accompanied by an estimation of an effect size. These effect sizes depend on the nature of the test and the data.</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What to do about p-values
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Don’t rely on p-values alone</li>
+<li>Know their limits</li>
+<li>Use effect sizes</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-nieuwenhuis2011erroneous" class="csl-entry" role="listitem">
+Nieuwenhuis, Sander, Birte U Forstmann, and Eric-Jan Wagenmakers. 2011. <span>“Erroneous Analyses of Interactions in Neuroscience: A Problem of Significance.”</span> <em>Nature Neuroscience</em> 14 (9): 1105–7.
+</div>
+<div id="ref-wasserstein2016asa" class="csl-entry" role="listitem">
+Wasserstein, Ronald L, and Nicole A Lazar. 2016. <span>“The ASA Statement on p-Values: Context, Process, and Purpose.”</span> <em>The American Statistician</em>. Taylor &amp; Francis.
+</div>
+<div id="ref-weiner2022venn" class="csl-entry" role="listitem">
+Weiner 3rd, January, Benedikt Obermayer, and Dieter Beule. 2022. <span>“Venn Diagrams May Indicate Erroneous Statistical Reasoning in Transcriptomics.”</span> <em>Frontiers in Genetics</em> 13: 818683.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./htdata.html" class="pagination-link" aria-label="High Throughput Data Analysis">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">High Throughput Data Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
