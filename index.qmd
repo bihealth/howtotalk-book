@@ -2,8 +2,15 @@
 
 Please note: this brochure is a work in progress, barely started at this stage.
 The statistics chapter is largely ready, but others are at various stages.
-However, there still is the presentation ([https://bihealth.github.io/howtotalk](https://bihealth.github.io/howtotalk))
+However, there still is the presentation ([bihealth.github.io/howtotalk](https://bihealth.github.io/howtotalk))
 which is actually where my idea started.
+
+If you have any comments, suggestions or corrections, click in the top
+right corner of this page on the $<$ icon to open the
+[Hypothesis](https://hypothes.is/) annotation sidebar – it requires a free
+login, but is otherwise really useful and definitely worth it.
+Alternatively, file a github issue at the repository for this book – 
+[github.com/bihealth/howtotalk-book](https://github.com/bihealth/howtotalk-book).
 
 ## Who this book is for
 
