@@ -37,9 +37,9 @@ non-parametric alternatives – possibly more suitable. After all, we are not
 so much interested whether a gene is up-regulated 1.7 times or 1.9 times,
 but rather whether it is up- or down-regulated.
 
-The third surprising thing was when Teresa Domaszewska, my student at that
-time, tried to reproduce the findings of both papers. Our idea was, you
-see, that evolutionarily speaking, the lineages leading to mice and humans
+The second surprising thing was when Teresa Domaszewska, my student at that
+time, tried to reproduce the findings of both papers. Our idea was
+that evolutionarily speaking, the lineages leading to mice and humans
 split about 90 million years ago. That means that we share a lot of common
 evolutionary history, and obviously there will be many conserved parts of
 the immune system common to both species. However, for the past 90 million
@@ -164,7 +164,11 @@ The book that you are now reading is written using a system called
 you are an R user, you probably use RStudio, which has excellent and native
 support for both Rmarkdown and Quarto. But Quarto is not limited to R; if
 you program with Python or Julia or even other languages, you can still use
-it in your workflow.
+it in your workflow[^mermaid]. 
+
+[^mermaid]: In fact, the diagram above was generated using a
+graph scripting language called [Mermaid](https://mermaid.js.org/), which
+is also supported natively in Quarto.
 
 ```{r include=FALSE}
 #| label: setup-pval
@@ -207,7 +211,7 @@ file and available for download from
 
 Here is the code that I include in my Quarto document to read the data and
 run a simple statistical test. I have opted to show the code below, but it
-does not have to be as visible as that in the final doucument.
+does not have to be as visible as that in the final document.
 
 
 ```{r}
@@ -262,4 +266,12 @@ look at the chapter [High throughput data analysis](htdata.html) in which
 you will find some figures and results generated from a real dataset. You
 can find the code corresponding to each figure and see precisely how I
 generated each result.
+
+Quarto and Rmarkdown, apart from the advantages mentioned above, have
+excellent support for citations and bibliographies, cross-references to
+figures and tables, and many other features that make writing scientific
+manuscripts a breeze. Unfortunately, the downside is that most of your
+collaborators and coauthors will not be familiar with these systems and you
+will still have to produce Word documents for them to work with.
+
 

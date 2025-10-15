@@ -19,6 +19,8 @@ book:
     search: true
     style: floating
     border: true
+  comments:
+    hypothesis: true
   navbar:
     left:
       - text: "Introduction"
@@ -38,6 +40,7 @@ bibliography: references.bib
 
 format:
   html:
+    css: "custom.css"
     theme: 
       light: cosmo
       dark: darkly

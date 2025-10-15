@@ -7,6 +7,15 @@ which is actually where my idea started.
 
 ## Who this book is for
 
+The book records the different bits and pieces of advice I keep giving to
+my collaborators, students and colleagues. They are mostly based on my
+experience as a statistician and computational biologist working in a
+biomedical research environment. A lot of what I have to say I had to learn
+the hard way – by commiting the mistakes I am now warning you against. I
+chose what things to include in this book by asking myself: "What do I wish I had
+known when I started out?" and: "What do I wish my collaborators knew when
+we started working together?"
+
 ## Who am I to tell you this stuff?
 
 ## Bioinformatics, statistics and computational biology
@@ -19,6 +28,18 @@ are those who use these tools to actual data, and the more precise term for
 these people is "computational biologists". Finally, there are those of us
 who walk around and criticize experimental designs and they are called
 statisticians.
+
+The truth is most of us have at least set a foot in all three camps, but
+experience and interest usually make us specialize in one of them. In
+especially statistics appears to be separated from the other two, with many
+bioinformaticians having only a very limited understanding of it, and many
+statisticians having no experience with high throughput biological data and
+other applications which are the bread and butter of bioinformaticians and
+computational biologists[^power].
+
+[^power]: A notable case in point are practical calculation of statistical
+  power in high-dimensional settings, which require expertise in both, 
+  statistics and high-throughput data analysis.
 
 ```{dot}
 #| fig-width: 12

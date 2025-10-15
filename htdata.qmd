@@ -381,7 +381,7 @@ p1 <- ggplot(res_m, aes(x = log2FC_5, y = log2FC_10, color = disco_5_10)) +
   xlab("log2 fold change (5 samples / group)") +
   ylab("log2 fold change (10 samples / group)") +
   theme_minimal() +
-  ggtitle("Comparison of non-COVID viral infection vs non-viral controls") +
+  ggtitle("5 samples vs 10 samples") +
   theme(legend.position = "none") +
   xlim(c(-6, 6)) + ylim(c(-6, 6)) +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black")
@@ -392,7 +392,7 @@ p2 <- ggplot(res_m, aes(x = log2FC_10, y = log2FC_10_covid, color = disco_5_10_c
   xlab("log2 fold change (10 samples / group, non-COVID vs no)") +
   ylab("log2 fold change (10 samples / group, COVID vs no)") +
   theme_minimal() +
-  ggtitle("Comparison of COVID-19 vs non-viral controls") +
+  ggtitle("COVID19 patients or non-COVID19 patients compared with no virus controls") +
   theme(legend.position = "none") +
   xlim(c(-6, 6)) + ylim(c(-6, 6)) +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black")
