@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -104,6 +124,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -138,9 +164,10 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -270,12 +297,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reproducible-workflows-with-quarto-or-rmarkdown" id="toc-reproducible-workflows-with-quarto-or-rmarkdown" class="nav-link active" data-scroll-target="#reproducible-workflows-with-quarto-or-rmarkdown"><span class="header-section-number">4.1</span> Reproducible workflows with Quarto or Rmarkdown</a></li>
+  <li><a href="#of-mice-men-and-reproducibility" id="toc-of-mice-men-and-reproducibility" class="nav-link active" data-scroll-target="#of-mice-men-and-reproducibility"><span class="header-section-number">4.1</span> Of mice, men and reproducibility</a></li>
+  <li><a href="#accountable-workflows-with-quarto-or-rmarkdown" id="toc-accountable-workflows-with-quarto-or-rmarkdown" class="nav-link" data-scroll-target="#accountable-workflows-with-quarto-or-rmarkdown"><span class="header-section-number">4.2</span> Accountable workflows with Quarto or Rmarkdown</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -296,8 +324,52 @@ window.Quarto = {
 </header>
 
 
-<section id="reproducible-workflows-with-quarto-or-rmarkdown" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="reproducible-workflows-with-quarto-or-rmarkdown"><span class="header-section-number">4.1</span> Reproducible workflows with Quarto or Rmarkdown</h2>
+<section id="of-mice-men-and-reproducibility" class="level2 page-columns page-full" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="of-mice-men-and-reproducibility"><span class="header-section-number">4.1</span> Of mice, men and reproducibility</h2>
+<p>In 2013, a paper in <em>PNAS</em> made quite a splash. The authors compared transcriptomic responses to various human infommatory conditions (burns, trauma and inflammation) with the transcriptomic responses in the corresponding mouse models. The conclusion was in the title: Genomic responses in mouse models poorly mimic human inflammatory diseases.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Genomic responses in mouse models <strong>poorly</strong> mimic human inflammatory diseases <span class="citation" data-cites="seok2013genomic">(<a href="references.html#ref-seok2013genomic" role="doc-biblioref">Seok et al. 2013</a>)</span></p>
+</div></div><p>A bit over a year later, in the same journal, another paper was published. The title was identical… <em>almost</em> identical: instead of “poorly mimic”, the authors wrote “greatly mimic”. Their conclusion was, it turns out, that mouse models are actually pretty good at mimicking human inflammatory diseases.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Genomic responses in mouse models <strong>greatly</strong> mimic human inflammatory diseases <span class="citation" data-cites="takao2015genomic">(<a href="references.html#ref-takao2015genomic" role="doc-biblioref">Takao and Miyakawa 2015</a>)</span></p>
+</div></div><p>The fact that two papers come up with diametrically opposed conclusions is, in itself, not that surprising. That is what science is about, after all. The first surprising thing about these two papers was that they were based on the <em>same</em> data. The second paper was a re-analysis of the data from the first paper – done in a different way, which focused on similarities. Among other things, they looked only at genes that were significantly up- or down-regulated in either species rather than looking at all noisy genes. Also, rather than using parametric statistics, they focused on non-parametric alternatives – possibly more suitable. After all, we are not so much interested whether a gene is up-regulated 1.7 times or 1.9 times, but rather whether it is up- or down-regulated.</p>
+<p>The second surprising thing was when Teresa Domaszewska, my student at that time, tried to reproduce the findings of both papers. Our idea was that evolutionarily speaking, the lineages leading to mice and humans split about 90 million years ago. That means that we share a lot of common evolutionary history, and obviously there will be many conserved parts of the immune system common to both species. However, for the past 90 million years our species evolved separately, in different environments, with different evolutionary pressures, constraints and lifestyles. We believed that a third paper should be written, one where the word “partly” would replace “poorly” or “greatly”.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Of mice, men and immunity: a case for evolutionary systems biology <span class="citation" data-cites="ernst2018mice">(<a href="references.html#ref-ernst2018mice" role="doc-biblioref">Ernst and Carvunis 2018</a>)</span></p>
+</div></div><p>However, it turned out that although the data were public, an exact reproduction of all the results was impossible. The authors of either of the papers did not provide the exact code (programs) that were used to generate the results. Lime many other scientists, we found that the published methods are pitifuly insufficient to reproduce the results.</p>
+<p>This is, unfortunately, a very common situation in biomedical research.</p>
+<p>In 2021, results of a large-scale effort to reproduce 193 experiments from 53 high impact papers in cancer biology were published. As in previous attempts in other fields of science, it turned out that more than half of the findings could not be reproduced, and even in cases where the results were reproducibile, the effect sizes were usually smaller than originally reported. However, that is not even the most worrying part. Clearly, a successful reproduction of a scientific finding does not necessarily mean that the original finding was correct, and a failure to reproduce is not necessarily a sure sign that the original finding was wrong, and after all half of the findings <em>were</em> reproducible.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Investigating the replicability of preclinical cancer biology <span class="citation" data-cites="errington2021investigating">(<a href="references.html#ref-errington2021investigating" role="doc-biblioref">Errington, Mathur, et al. 2021</a>)</span></p>
+<p>Challenges for assessing replicability in preclinical cancer biology <span class="citation" data-cites="errington2021challenges">(<a href="references.html#ref-errington2021challenges" role="doc-biblioref">Errington, Denis, et al. 2021</a>)</span></p>
+</div></div><p>Much more problematic was the fact that the original papers <em>did not provide enough information to even attempt a reproduction</em>:</p>
+<blockquote class="blockquote">
+<p>” Second, <strong>none of the 193 experiments</strong> were described in sufficient detail in the original paper to enable us to design protocols to repeat the experiments, so we had to seek clarifications from the original authors.” (Errington et al., 2021)</p>
+</blockquote>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Challenges for assessing replicability in preclinical cancer biology <span class="citation" data-cites="errington2021challenges">(<a href="references.html#ref-errington2021challenges" role="doc-biblioref">Errington, Denis, et al. 2021</a>)</span></p>
+</div></div><p>and:</p>
+<blockquote class="blockquote">
+<p>“Third, once experimental work started, 67% of the peer-reviewed protocols required modifications to complete the research and just 41% of those modifications could be implemented. (…) This experience draws attention to a basic and fundamental concern about replication – it is hard to assess whether reported findings are credible. (ibid.)</p>
+</blockquote>
+<p>This situation is, unfortunately, not unique to cancer biology and it saddens me to say that it is fairly common in bioinformatics as well. While usually the data necessary to reproduce the analyses included in a paper are obtainable, but the actual code (programs) used to generate the results are either not fully available or so poorly documented that reproducing the results while in theory possible in practice requires a large amount of work at best and is often next to impossible.</p>
+<p>I like to use the term <strong>accountable</strong>: if you have a scientific result, be that a figure in a manuscript, a table or a supplementary Excel file, you should be able to <em>easily</em> trace it back to the primary readouts – the data collected in the lab, output by the sequencing machine, entered in the Excel sheet by the medical professional examining the patient. Fortunately, the tools to achieve that are not only available, but they are widely used and pretty easy to learn.</p>
+</section>
+<section id="accountable-workflows-with-quarto-or-rmarkdown" class="level2 page-columns page-full" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="accountable-workflows-with-quarto-or-rmarkdown"><span class="header-section-number">4.2</span> Accountable workflows with Quarto or Rmarkdown</h2>
+<p>The solution that I and many others advocate is to use what has been called by one of the pioneers of computer science, Donald Knuth, <em>literate programming</em>:</p>
+<blockquote class="blockquote">
+<p>Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do. “Literate Programming”, The Computer Journal 27 (1984), p.&nbsp;97.</p>
+</blockquote>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Literate programming <span class="citation" data-cites="knuth1984literate">(<a href="references.html#ref-knuth1984literate" role="doc-biblioref">Knuth 1984</a>)</span></p>
+</div></div><p>The idea is that your whole analysis is a human readable document that contains both the text and the code (R scripts, Python programs, shell scripts…) that generate the presented results – figures, tables, Excel files… The document is then processed to produce the desired output format in a human readable form, and simultaneously the code is executed to actually generate the results.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -318,16 +390,82 @@ window.Quarto = {
 </div>
 </div>
 <p><em>This can be Rmarkdown, Quarto, Jupyter… the goal is that your code and your text are in one place, and the results of your calculations are entered automatically into the text.</em></p>
-<p>In systems such ar R markdown, you can put directly your analysis results in your text. For example, when I write that the <span class="math inline">\(p\)</span>-value is equal to 0.05, I am writing this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>In systems such ar R markdown, you can put directly your</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>analysis results in your text. For example, when I write that the</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>$p$-value is equal to <span class="in">`​r pval`</span>, I am writing this:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The book that you are now reading is written using a system called <a href="https://quarto.org">Quarto</a>, which is a modern version of Rmarkdown. If you are an R user, you probably use RStudio, which has excellent and native support for both Rmarkdown and Quarto. But Quarto is not limited to R; if you program with Python or Julia or even other languages, you can still use it in your workflow<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;In fact, the diagram above was generated using a graph scripting language called <a href="https://mermaid.js.org/">Mermaid</a>, which is also supported natively in Quarto.</p></div></div><p>Here is how Quarto, Rmarkdown and similar systems work. Basically, you write your text as usual, including formatting in a way similar to how you emphasize text in emails (eg. stars like <code>*this*</code> result in italics like <em>this</em>). However, instead of writing up your results manually or copying and pasting figures from a separate program, you include the code that produces them <em>directly</em> in the text. For example, when I write that the <em>p</em>-value is equal to 0.05, I am writing literally this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>For example, when I write that the *p*-value is equal </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>to <span class="in">`​r pval`</span>, I am writing literally this:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <span class="math inline">\(p\)</span>-value above is not entered manually (as 0.05), but is the result of a statistical computation. If the data changes, if your analysis changes, the <span class="math inline">\(p\)</span>-value above will automatically change as well.</p>
 <p>Why is that a big deal? If you have ever written a manuscript or report, you probably know why: data change, analyses change, and each time a change happens, you have to go back to your manuscript and change every single occurence of the results, every figure, every table. Not only is that tedious, but it is also error-prone: you may forget to change one of the results, and then your manuscript is inconsistent with itself.</p>
-<p>But that is not all. The most important part of is that your entire analysis, every operation on your data, every step, every statistical test or choice you have made is <em>automatically</em> documented in your code. Take a look at the chapter <a href="htdata.html">High throughput data analysis</a> in which you can find some figures and results generated from a real dataset. You can find the code corresponding to each figure and see precisely how I generated each result.</p>
+<p>But that is not all. The most important part of is that your entire analysis, every operation on your data, every step, every statistical test or choice you have made is <em>automatically</em> documented in your code. Let me give you another example. I have prepared a little dataset, stored as a CSV file and available for download from <a href="https://github.com/bihealth/howtotalk-book/raw/refs/heads/main/scripts/iris.csv">github</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;This is a tiny subset of the famous Iris dataset. You can find the whole dataset in R by typing <code>iris</code> into console.</p></div></div><p>Here is the code that I include in my Quarto document to read the data and run a simple statistical test. I have opted to show the code below, but it does not have to be as visible as that in the final document.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the URL of the CSV file ON github</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://github.com/bihealth/howtotalk-book/raw/refs/heads/main/scripts/iris.csv"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># read the data from the URL</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># run a t-test comparing sepal length between two species</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># and store the result in a variable</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(Sepal_Length <span class="sc">~</span> Species, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>I now can refer to the results of the statistical test in my text. For example, I can write that the difference in sepal length between the two species is statistically significant, with a <em>p</em>-value of 0.009, and that there were 40 samples in total. None of these numbers are entered manually; if the data change, the results will be updated when you run Quarto again.</p>
+<p>I can also include a figure just by writing the code that generates it. The figure is a so-called raincloud plot, which combines a boxplot, a violin plot and a scatter plot – all to demonstrate the distribution of data points.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># nice plotting library</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrain)  <span class="co"># for raincloud plots</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># make a rain cloud</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal_Length)) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rain</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Sepal length (cm)"</span>, <span class="at">x=</span><span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-iris" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iris-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="reproducibility_files/figure-html/fig-iris-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iris-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Raincloud plot showing sepal length in two species of iris
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also take a look at the chapter <a href="htdata.html">High throughput data analysis</a> in which you will find some figures and results generated from a real dataset. You can find the code corresponding to each figure and see precisely how I generated each result.</p>
+<p>Quarto and Rmarkdown, apart from the advantages mentioned above, have excellent support for citations and bibliographies, cross-references to figures and tables, and many other features that make writing scientific manuscripts a breeze. Unfortunately, the downside is that most of your collaborators and coauthors will not be familiar with these systems and you will still have to produce Word documents for them to work with.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-ernst2018mice" class="csl-entry" role="listitem">
+Ernst, Peter B, and Anne-Ruxandra Carvunis. 2018. <span>“Of Mice, Men and Immunity: A Case for Evolutionary Systems Biology.”</span> <em>Nature Immunology</em> 19 (5): 421–25.
+</div>
+<div id="ref-errington2021challenges" class="csl-entry" role="listitem">
+Errington, Timothy M, Alexandria Denis, Nicole Perfito, Elizabeth Iorns, and Brian A Nosek. 2021. <span>“Challenges for Assessing Replicability in Preclinical Cancer Biology.”</span> <em>Elife</em> 10: e67995.
+</div>
+<div id="ref-errington2021investigating" class="csl-entry" role="listitem">
+Errington, Timothy M, Maya Mathur, Courtney K Soderberg, Alexandria Denis, Nicole Perfito, Elizabeth Iorns, and Brian A Nosek. 2021. <span>“Investigating the Replicability of Preclinical Cancer Biology.”</span> <em>Elife</em> 10: e71601.
+</div>
+<div id="ref-knuth1984literate" class="csl-entry" role="listitem">
+Knuth, Donald Ervin. 1984. <span>“Literate Programming.”</span> <em>The Computer Journal</em> 27 (2): 97–111.
+</div>
+<div id="ref-seok2013genomic" class="csl-entry" role="listitem">
+Seok, Junhee, H Shaw Warren, Alex G Cuenca, Michael N Mindrinos, Henry V Baker, Weihong Xu, Daniel R Richards, et al. 2013. <span>“Genomic Responses in Mouse Models Poorly Mimic Human Inflammatory Diseases.”</span> <em>Proceedings of the National Academy of Sciences</em> 110 (9): 3507–12.
+</div>
+<div id="ref-takao2015genomic" class="csl-entry" role="listitem">
+Takao, Keizo, and Tsuyoshi Miyakawa. 2015. <span>“Genomic Responses in Mouse Models Greatly Mimic Human Inflammatory Diseases.”</span> <em>Proceedings of the National Academy of Sciences</em> 112 (4): 1167–72.
+</div>
+</div>
 </section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

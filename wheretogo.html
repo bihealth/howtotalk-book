@@ -70,8 +70,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
 
+<link rel="stylesheet" href="custom.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -199,8 +206,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#using-chatgpt-and-other-llm-large-language-models-tools" id="toc-using-chatgpt-and-other-llm-large-language-models-tools" class="nav-link active" data-scroll-target="#using-chatgpt-and-other-llm-large-language-models-tools"><span class="header-section-number">6.1</span> Using ChatGPT and other LLM (large language models) tools</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -231,11 +244,36 @@ ul.task-list li input[type="checkbox"] {
 <li>Reproducible workflows with Quarto/Rmarkdown or Jupyter</li>
 </ul>
 <p>Even if you are not going to use these tools yourself, gaining an insight into how they work will help you to communicate with your bioinformatician.</p>
-<p><strong>Statistics.</strong></p>
+<p><strong>Statistics.</strong> When teaching R to students I often say that learning how to code is much easier than learning statistics. Despite my formal training in statistics, I still find it hard to grasp some of the more advanced concepts and I know my limits. Unfortunately, the 101 statistic courses are by necessity less useful in real life than one would hope – using a t-test is simple enough, but in real world the applications are often much more complex. On top of it, many bioinformaticians or computational biologists have also a very limited understanding of statistics.</p>
 <p><strong>Coding</strong>. Popular language choices include Python and R; Python is more widely spread among computer scientists, but has a slightly steeper learning curve. If you plan to code a lot, Python will be a good choice. R, on the other hand, is ideal for the casual data scientist. The R language is particularly well suited for both data science and statistics.</p>
 <p><strong>Quarto / Rmarkdown</strong>. Rmarkdown is the R-only, older system, while Quarto is the modern variant which supports R, Python and other languages. Both are excellent tools for creating reproducible workflows. They are easy to learn (especially if you are using Rstudio) and allow a lot of flexibility in the produced output. In fact, this book that you are reading right now has been written in Quarto.</p>
+<section id="using-chatgpt-and-other-llm-large-language-models-tools" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="using-chatgpt-and-other-llm-large-language-models-tools"><span class="header-section-number">6.1</span> Using ChatGPT and other LLM (large language models) tools</h2>
+<p>There are problems with using geneartive LLM tools like ChatGPT, Perplexity AI and others – problems which are of ethical, legal and practical nature. For example, the recent rush to use such tools results in a huge amount of energy consumption and thus CO<sub>2</sub> emissions which could be avoided in a lot of cases.</p>
+<p>Furthermore, the AI not only isn’t all-knowing, it is also very hard to notice that you have hit its limits. Instead of acknowledging that it doesn’t know something, it will try to make up an answer which sounds plausible, but is actually wrong. This has been mockingly called “hallucinating” by some people. Therefore, if you have alternatives, you should prefer them over using AI tools.</p>
+<p>Still, there are cases where LLM tools can be very useful. If you are a beginner learning a programming language, especially one that is widely used and popular, like R or Python, LLM can be a surprisingly good tutor. It is patient, polite and can often explain things better than a human. This is the best application of LLM tools that I have found so far.</p>
+<p>What you should definitely not do is to use LLM tools to write your code for you <em>unless you know exactly what you are doing</em> and unless <em>you understand exactly the code that the tool produces</em>. If, say, you would like to produce a raincloud plot in R, ask the LLM how to do it. But then rather than just using the code directly, try to understand how it works – ask the LLM to explain the code to you until you are sure that you really know how it works. Only then try to code yourself, and when (inevitably) you encounter problems, get back to LLM and ask for help with the specific problem.</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<ul>
+<li>Do not use LLM tools to write your code</li>
+<li>Use LLM tools to
+<ul>
+<li>learn how to code</li>
+<li>understand</li>
+<li>debug your code</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
