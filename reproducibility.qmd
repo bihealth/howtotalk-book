@@ -1,10 +1,148 @@
 # Scientific Reproducibility
 
+## Of mice, men and reproducibility
+
+In 2013, a paper in *PNAS* made quite a splash. The authors compared
+transcriptomic responses to various human infommatory conditions (burns, trauma and
+inflammation) with the transcriptomic responses in the corresponding mouse
+models. The conclusion was in the title: Genomic responses in mouse models
+poorly mimic human inflammatory diseases.
 
 
+::: {.aside}
+Genomic responses in mouse models **poorly** mimic human inflammatory diseases
+[@seok2013genomic]
+:::
+
+A bit over a year later, in the same journal, another paper was published.
+The title was identical... *almost* identical: instead of "poorly mimic",
+the authors wrote "greatly mimic". Their conclusion was, it turns out, that
+mouse models are actually pretty good at mimicking human inflammatory
+diseases.
+
+::: {.aside}
+Genomic responses in mouse models **greatly** mimic human inflammatory diseases
+[@takao2015genomic]
+:::
+
+The fact that two papers come up with diametrically opposed conclusions is,
+in itself, not that surprising. That is what science is about, after all.
+The first surprising thing about these two papers was that they were based
+on the *same* data. The second paper was a re-analysis of the data from the
+first paper – done in a different way, which focused on similarities. Among
+other things, they looked only at genes that were significantly up- or
+down-regulated in either species rather than looking at all noisy genes.
+Also, rather than using parametric statistics, they focused on
+non-parametric alternatives – possibly more suitable. After all, we are not
+so much interested whether a gene is up-regulated 1.7 times or 1.9 times,
+but rather whether it is up- or down-regulated.
+
+The third surprising thing was when Teresa Domaszewska, my student at that
+time, tried to reproduce the findings of both papers. Our idea was, you
+see, that evolutionarily speaking, the lineages leading to mice and humans
+split about 90 million years ago. That means that we share a lot of common
+evolutionary history, and obviously there will be many conserved parts of
+the immune system common to both species. However, for the past 90 million
+years our species evolved separately, in different environments, with
+different evolutionary pressures, constraints and lifestyles. We believed
+that a third paper should be written, one where the word "partly" would
+replace "poorly" or "greatly".
+
+::: {.aside}
+Of mice, men and immunity: a case for evolutionary systems biology
+[@ernst2018mice]
+:::
 
 
-## Reproducible workflows with Quarto or Rmarkdown
+However, it turned out that although the data were public, an exact
+reproduction of all the results was impossible. The authors of either of
+the papers did not provide the exact code (programs) that were used to
+generate the results. Lime many other scientists, we found that the
+published methods are pitifuly insufficient to reproduce the results.
+
+This is, unfortunately, a very common situation in biomedical research. 
+
+In 2021, results of a large-scale effort to reproduce 193 experiments from
+53 high impact papers in cancer biology were published. As in previous
+attempts in other fields of science, it turned out that more than half of
+the findings could not be reproduced, and even in cases where the results
+were reproducibile, the effect sizes were usually smaller than originally
+reported. However, that is not even the most worrying part. Clearly, a
+successful reproduction of a scientific finding does not necessarily mean
+that the original finding was correct, and a failure to reproduce is not
+necessarily a sure sign that the original finding was wrong, and after all
+half of the findings *were* reproducible.
+
+::: {.aside}
+Investigating the replicability of preclinical cancer biology
+[@errington2021investigating]
+
+Challenges for assessing replicability in preclinical cancer biology
+[@errington2021challenges]
+:::
+
+
+Much more problematic was the fact that the original papers *did not
+provide enough information to even attempt a reproduction*:
+
+> " Second, **none of the 193 experiments** were described in sufficient detail
+> in the original paper to enable us to design protocols to repeat the
+> experiments, so we had to seek clarifications from the original authors."
+> (Errington et al., 2021)
+
+::: {.aside}
+Challenges for assessing replicability in preclinical cancer biology
+[@errington2021challenges]
+:::
+
+and:
+
+> "Third, once experimental work started, 67% of the peer-reviewed
+> protocols required modifications to complete the research and just 41% of
+> those modifications could be implemented. (...) This
+> experience draws attention to a basic and fundamental concern about
+> replication – it is hard to assess whether reported findings are
+> credible.
+> (ibid.)
+
+This situation is, unfortunately, not unique to cancer biology and it
+saddens me to say that it is fairly common in bioinformatics as well. While
+usually the data necessary to reproduce the analyses included in a paper
+are obtainable, but the actual code (programs) used to generate the results
+are either not fully available or so poorly documented that reproducing the
+results while in theory possible in practice requires a large amount of
+work at best and is often next to impossible.
+
+I like to use the term **accountable**: if you have a scientific result, be
+that a figure in a manuscript, a table or a supplementary Excel file, you
+should be able to *easily* trace it back to the primary readouts – the data
+collected in the lab, output by the sequencing machine, entered in the
+Excel sheet by the medical professional examining the patient. Fortunately,
+the tools to achieve that are not only available, but they are widely used
+and pretty easy to learn.
+
+## Accountable workflows with Quarto or Rmarkdown
+
+The solution that I and many others advocate is to use what has been called
+by one of the pioneers of computer science, Donald Knuth, *literate
+programming*: 
+
+> Let us change our traditional attitude to the construction of programs:
+> Instead of imagining that our main task is to instruct a computer what to
+> do, let us concentrate rather on explaining to human beings what we want
+> a computer to do.
+> "Literate Programming", The Computer Journal 27 (1984), p. 97.
+
+::: {.aside}
+Literate programming [@knuth1984literate]
+:::
+
+The idea is that your whole analysis is a human readable
+document that contains both the text and the code (R scripts, Python
+programs, shell scripts...) that generate the presented results – figures,
+tables, Excel files... The document is then processed to produce the
+desired output format in a human readable form, and simultaneously the code is
+executed to actually generate the results.
 
 ```{mermaid}
 flowchart LR
@@ -21,19 +159,29 @@ flowchart LR
 your text are in one place, and the results of your calculations are
 entered automatically into the text.*
 
+The book that you are now reading is written using a system called
+[Quarto](https://quarto.org), which is a modern version of Rmarkdown. If
+you are an R user, you probably use RStudio, which has excellent and native
+support for both Rmarkdown and Quarto. But Quarto is not limited to R; if
+you program with Python or Julia or even other languages, you can still use
+it in your workflow.
 
 ```{r include=FALSE}
+#| label: setup-pval
 pval <- 0.05
 ```
 
-In systems such ar R markdown, you can put directly your
-analysis results in your text. For example, when I write that the
-$p$-value is equal to `r pval`, I am writing this:
+Here is how Quarto, Rmarkdown and similar systems work. Basically, you
+write your text as usual, including formatting in a way similar to how you
+emphasize text in emails (eg. stars like `*this*` result in italics like
+*this*). However, instead of writing up your results manually or copying
+and pasting figures from a separate program, you include the code that
+produces them *directly* in the text. For example, when I write that the
+*p*-value is equal to `r pval`, I am writing literally this:
 
 ```markdown
-In systems such ar R markdown, you can put directly your
-analysis results in your text. For example, when I write that the
-$p$-value is equal to `​r pval`, I am writing this:
+For example, when I write that the *p*-value is equal 
+to `​r pval`, I am writing literally this:
 ```
 
 The $p$-value above is not entered manually (as 0.05), but is the result of
@@ -49,7 +197,16 @@ results, and then your manuscript is inconsistent with itself.
 
 But that is not all. The most important part of is that your entire
 analysis, every operation on your data, every step, every statistical test
-or choice you have made is *automatically* documented in your code. Take a
+or choice you have made is *automatically* documented in your code. Let me
+give you another example. I have prepared a little dataset, stored as Excel
+file and available for download from [here](
+
+
+
+
+
+
+Take a
 look at the chapter [High throughput data analysis](htdata.html) in which
 you can find some figures and results generated from a real dataset. You
 can find the code corresponding to each figure and see precisely how I
