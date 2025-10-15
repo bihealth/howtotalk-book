@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "How to talk to your bioinformatician",
     "section": "",
-    "text": "1 Introduction\nPlease note: this brochure is a work in progress, barely started at this stage. The statistics chapter is largely ready, but others are at various stages. However, there still is the presentation (https://bihealth.github.io/howtotalk) which is actually where my idea started.",
+    "text": "1 Introduction\nPlease note: this brochure is a work in progress, barely started at this stage. The statistics chapter is largely ready, but others are at various stages. However, there still is the presentation (bihealth.github.io/howtotalk) which is actually where my idea started.\nIf you have any comments, suggestions or corrections, click in the top right corner of this page on the \\(&lt;\\) icon to open the Hypothesis annotation sidebar – it requires a free login, but is otherwise really useful and definitely worth it. Alternatively, file a github issue at the repository for this book – github.com/bihealth/howtotalk-book.",
     "crumbs": [
       "Introduction",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
@@ -176,25 +176,47 @@
     ]
   },
   {
-    "objectID": "wheretogo.html",
-    "href": "wheretogo.html",
-    "title": "6  Where to go from here",
+    "objectID": "visualizations.html",
+    "href": "visualizations.html",
+    "title": "6  Visualizing data",
     "section": "",
-    "text": "6.1 Using ChatGPT and other LLM (large language models) tools\nI hope that this little book was useful and that you would like to learn more on reproducible research and bioinformatics. The three things that I believe are most useful to almost any researcher are:\nEven if you are not going to use these tools yourself, gaining an insight into how they work will help you to communicate with your bioinformatician.\nStatistics. When teaching R to students I often say that learning how to code is much easier than learning statistics. Despite my formal training in statistics, I still find it hard to grasp some of the more advanced concepts and I know my limits. Unfortunately, the 101 statistic courses are by necessity less useful in real life than one would hope – using a t-test is simple enough, but in real world the applications are often much more complex. On top of it, many bioinformaticians or computational biologists have also a very limited understanding of statistics.\nCoding. Popular language choices include Python and R; Python is more widely spread among computer scientists, but has a slightly steeper learning curve. If you plan to code a lot, Python will be a good choice. R, on the other hand, is ideal for the casual data scientist. The R language is particularly well suited for both data science and statistics.\nQuarto / Rmarkdown. Rmarkdown is the R-only, older system, while Quarto is the modern variant which supports R, Python and other languages. Both are excellent tools for creating reproducible workflows. They are easy to learn (especially if you are using Rstudio) and allow a lot of flexibility in the produced output. In fact, this book that you are reading right now has been written in Quarto.\nThere are problems with using geneartive LLM tools like ChatGPT, Perplexity AI and others – problems which are of ethical, legal and practical nature. For example, the recent rush to use such tools results in a huge amount of energy consumption and thus CO2 emissions which could be avoided in a lot of cases.\nFurthermore, the AI not only isn’t all-knowing, it is also very hard to notice that you have hit its limits. Instead of acknowledging that it doesn’t know something, it will try to make up an answer which sounds plausible, but is actually wrong. This has been mockingly called “hallucinating” by some people. Therefore, if you have alternatives, you should prefer them over using AI tools.\nStill, there are cases where LLM tools can be very useful. If you are a beginner learning a programming language, especially one that is widely used and popular, like R or Python, LLM can be a surprisingly good tutor. It is patient, polite and can often explain things better than a human. This is the best application of LLM tools that I have found so far.\nWhat you should definitely not do is to use LLM tools to write your code for you unless you know exactly what you are doing and unless you understand exactly the code that the tool produces. If, say, you would like to produce a raincloud plot in R, ask the LLM how to do it. But then rather than just using the code directly, try to understand how it works – ask the LLM to explain the code to you until you are sure that you really know how it works. Only then try to code yourself, and when (inevitably) you encounter problems, get back to LLM and ask for help with the specific problem.",
+    "text": "6.1 Show the data!",
     "crumbs": [
       "Introduction",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Where to go from here</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Visualizing data</span>"
+    ]
+  },
+  {
+    "objectID": "visualizations.html#avoid-bar-charts",
+    "href": "visualizations.html#avoid-bar-charts",
+    "title": "6  Visualizing data",
+    "section": "6.2 Avoid bar charts",
+    "text": "6.2 Avoid bar charts",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Visualizing data</span>"
+    ]
+  },
+  {
+    "objectID": "wheretogo.html",
+    "href": "wheretogo.html",
+    "title": "7  Where to go from here",
+    "section": "",
+    "text": "7.1 Using ChatGPT and other LLM (large language models) tools\nI hope that this little book was useful and that you would like to learn more on reproducible research and bioinformatics. The three things that I believe are most useful to almost any researcher are:\nEven if you are not going to use these tools yourself, gaining an insight into how they work will help you to communicate with your bioinformatician.\nStatistics. When teaching R to students I often say that learning how to code is much easier than learning statistics. Despite my formal training in statistics, I still find it hard to grasp some of the more advanced concepts and I know my limits. Unfortunately, the 101 statistic courses are by necessity less useful in real life than one would hope – using a t-test is simple enough, but in real world the applications are often much more complex. On top of it, many bioinformaticians or computational biologists have also a very limited understanding of statistics.\nCoding. Popular language choices include Python and R; Python is more widely spread among computer scientists, but has a slightly steeper learning curve. If you plan to code a lot, Python will be a good choice. R, on the other hand, is ideal for the casual data scientist. The R language is particularly well suited for both data science and statistics.\nQuarto / Rmarkdown. Rmarkdown is the R-only, older system, while Quarto is the modern variant which supports R, Python and other languages. Both are excellent tools for creating reproducible workflows. They are easy to learn (especially if you are using Rstudio) and allow a lot of flexibility in the produced output. In fact, this book that you are reading right now has been written in Quarto.\nThere are problems with using geneartive LLM tools like ChatGPT, Perplexity AI and others – problems which are of ethical, legal and practical nature. For example, the recent rush to use such tools results in a huge amount of energy consumption and thus CO2 emissions which could be avoided in a lot of cases.\nFurthermore, the AI not only isn’t all-knowing, it is also very hard to notice that you have hit its limits. Instead of acknowledging that it doesn’t know something, it will try to make up an answer which sounds plausible, but is actually wrong. This has been mockingly called “hallucinating” by some people. Therefore, if you have alternatives, you should prefer them over using AI tools.\nStill, there are cases where LLM tools can be very useful. If you are a beginner learning a programming language, especially one that is widely used and popular, like R or Python, LLM can be a surprisingly good tutor. It is patient, polite and can often explain things better than a human. This is the best application of LLM tools that I have found so far.\nWhat you should definitely not do is to use LLM tools to write your code for you unless you know exactly what you are doing and unless you understand exactly the code that the tool produces. If, say, you would like to produce a raincloud plot in R, ask the LLM how to do it. But then rather than just using the code directly, try to understand how it works – ask the LLM to explain the code to you until you are sure that you really know how it works. Only then try to code yourself, and when (inevitably) you encounter problems, get back to LLM and ask for help with the specific problem.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Where to go from here</span>"
     ]
   },
   {
     "objectID": "wheretogo.html#using-chatgpt-and-other-llm-large-language-models-tools",
     "href": "wheretogo.html#using-chatgpt-and-other-llm-large-language-models-tools",
-    "title": "6  Where to go from here",
+    "title": "7  Where to go from here",
     "section": "",
     "text": "Do not use LLM tools to write your code\nUse LLM tools to\n\nlearn how to code\nunderstand\ndebug your code",
     "crumbs": [
       "Introduction",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Where to go from here</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Where to go from here</span>"
     ]
   },
   {

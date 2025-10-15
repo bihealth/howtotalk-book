@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Where to go from here – How to talk to your bioinformatician</title>
+<title>7&nbsp; Where to go from here – How to talk to your bioinformatician</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./metadata.html" rel="prev">
+<link href="./visualizations.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -119,6 +119,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Preparing metadata</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./visualizations.html"> 
+<span class="menu-text">Visualizing data</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./wheretogo.html"> 
 <span class="menu-text">Where to go from here</span></a>
   </li>  
@@ -139,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./wheretogo.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Where to go from here</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./wheretogo.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Where to go from here</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -191,8 +195,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./visualizations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visualizing data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./wheretogo.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Where to go from here</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Where to go from here</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -211,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#using-chatgpt-and-other-llm-large-language-models-tools" id="toc-using-chatgpt-and-other-llm-large-language-models-tools" class="nav-link active" data-scroll-target="#using-chatgpt-and-other-llm-large-language-models-tools"><span class="header-section-number">6.1</span> Using ChatGPT and other LLM (large language models) tools</a></li>
+  <li><a href="#using-chatgpt-and-other-llm-large-language-models-tools" id="toc-using-chatgpt-and-other-llm-large-language-models-tools" class="nav-link active" data-scroll-target="#using-chatgpt-and-other-llm-large-language-models-tools"><span class="header-section-number">7.1</span> Using ChatGPT and other LLM (large language models) tools</a></li>
   </ul>
 </nav>
     </div>
@@ -220,7 +230,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Where to go from here</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Where to go from here</span></h1>
 </div>
 
 
@@ -247,8 +257,8 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Statistics.</strong> When teaching R to students I often say that learning how to code is much easier than learning statistics. Despite my formal training in statistics, I still find it hard to grasp some of the more advanced concepts and I know my limits. Unfortunately, the 101 statistic courses are by necessity less useful in real life than one would hope – using a t-test is simple enough, but in real world the applications are often much more complex. On top of it, many bioinformaticians or computational biologists have also a very limited understanding of statistics.</p>
 <p><strong>Coding</strong>. Popular language choices include Python and R; Python is more widely spread among computer scientists, but has a slightly steeper learning curve. If you plan to code a lot, Python will be a good choice. R, on the other hand, is ideal for the casual data scientist. The R language is particularly well suited for both data science and statistics.</p>
 <p><strong>Quarto / Rmarkdown</strong>. Rmarkdown is the R-only, older system, while Quarto is the modern variant which supports R, Python and other languages. Both are excellent tools for creating reproducible workflows. They are easy to learn (especially if you are using Rstudio) and allow a lot of flexibility in the produced output. In fact, this book that you are reading right now has been written in Quarto.</p>
-<section id="using-chatgpt-and-other-llm-large-language-models-tools" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="using-chatgpt-and-other-llm-large-language-models-tools"><span class="header-section-number">6.1</span> Using ChatGPT and other LLM (large language models) tools</h2>
+<section id="using-chatgpt-and-other-llm-large-language-models-tools" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="using-chatgpt-and-other-llm-large-language-models-tools"><span class="header-section-number">7.1</span> Using ChatGPT and other LLM (large language models) tools</h2>
 <p>There are problems with using geneartive LLM tools like ChatGPT, Perplexity AI and others – problems which are of ethical, legal and practical nature. For example, the recent rush to use such tools results in a huge amount of energy consumption and thus CO<sub>2</sub> emissions which could be avoided in a lot of cases.</p>
 <p>Furthermore, the AI not only isn’t all-knowing, it is also very hard to notice that you have hit its limits. Instead of acknowledging that it doesn’t know something, it will try to make up an answer which sounds plausible, but is actually wrong. This has been mockingly called “hallucinating” by some people. Therefore, if you have alternatives, you should prefer them over using AI tools.</p>
 <p>Still, there are cases where LLM tools can be very useful. If you are a beginner learning a programming language, especially one that is widely used and popular, like R or Python, LLM can be a surprisingly good tutor. It is patient, polite and can often explain things better than a human. This is the best application of LLM tools that I have found so far.</p>
@@ -842,8 +852,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./metadata.html" class="pagination-link" aria-label="Preparing Meta Data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Preparing Meta Data</span></span>
+      <a href="./visualizations.html" class="pagination-link" aria-label="Visualizing data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visualizing data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
