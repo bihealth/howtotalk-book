@@ -309,9 +309,8 @@ window.Quarto = {
   <li><a href="#statistics-and-ht" id="toc-statistics-and-ht" class="nav-link" data-scroll-target="#statistics-and-ht"><span class="header-section-number">3.3</span> Statistics and HT</a>
   <ul class="collapse">
   <li><a href="#correction-for-multiple-testing-fdr" id="toc-correction-for-multiple-testing-fdr" class="nav-link" data-scroll-target="#correction-for-multiple-testing-fdr"><span class="header-section-number">3.3.1</span> Correction for multiple testing / FDR</a></li>
-  <li><a href="#to-log-or-not-to-log" id="toc-to-log-or-not-to-log" class="nav-link" data-scroll-target="#to-log-or-not-to-log"><span class="header-section-number">3.3.2</span> To log or not to log</a></li>
-  <li><a href="#the-scourge-of-the-absolute-thresholds" id="toc-the-scourge-of-the-absolute-thresholds" class="nav-link" data-scroll-target="#the-scourge-of-the-absolute-thresholds"><span class="header-section-number">3.3.3</span> The scourge of the absolute thresholds</a></li>
-  <li><a href="#degs-and-p-value-trap-an-example" id="toc-degs-and-p-value-trap-an-example" class="nav-link" data-scroll-target="#degs-and-p-value-trap-an-example"><span class="header-section-number">3.3.4</span> DEGs and p-value trap: an example</a></li>
+  <li><a href="#the-scourge-of-the-absolute-thresholds" id="toc-the-scourge-of-the-absolute-thresholds" class="nav-link" data-scroll-target="#the-scourge-of-the-absolute-thresholds"><span class="header-section-number">3.3.2</span> The scourge of the absolute thresholds</a></li>
+  <li><a href="#degs-and-p-value-trap-an-example" id="toc-degs-and-p-value-trap-an-example" class="nav-link" data-scroll-target="#degs-and-p-value-trap-an-example"><span class="header-section-number">3.3.3</span> DEGs and p-value trap: an example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -377,11 +376,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="to-log-or-not-to-log" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="to-log-or-not-to-log"><span class="header-section-number">3.3.2</span> To log or not to log</h3>
-</section>
-<section id="the-scourge-of-the-absolute-thresholds" class="level3 page-columns page-full" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="the-scourge-of-the-absolute-thresholds"><span class="header-section-number">3.3.3</span> The scourge of the absolute thresholds</h3>
+<section id="the-scourge-of-the-absolute-thresholds" class="level3 page-columns page-full" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="the-scourge-of-the-absolute-thresholds"><span class="header-section-number">3.3.2</span> The scourge of the absolute thresholds</h3>
 <p>A question that often arises in the context of HT data analysis is: “so how many genes / proteins / metabolites are differentially expressed <em>exactly</em>?”. For me as a bioinformatician, this question is not easily answered, and I will try to explain why. In the following, I will talk mostly about (bulk) RNA-seq data, but what I say applies to all kinds of HT data as well. In this context, we often say “DEGs” (differentially expressed genes) to refer to genes that are expressed at different levels in two or more conditions.</p>
 <p>But what <em>is</em> a DEG? How do you know a gene is a DEG? Quite often, we define the DEGs by the results of a statistical comparison we have made between two groups of samples. We define DEGs as those genes for which the FDR (false discovery rate) is below a certain threshold, e.g.&nbsp;5% (<span class="math inline">\(FDR &lt; 0.05\)</span>). Why 5%? This comes from the common practice in statistics, but that does not make it any less arbitrary. We could use 1% or 10%, or even 2.7%. And depending how we choose the threshold, the number of DEGs will be different.</p>
 <p>But 5% has at least a certain meaning: it is an attempt to keep the fraction of false positives among the DEGs at a certain level, as explained in the previous section (“Correction for multiple testing”). However, we also add another arbitrary threshold: the absolute change of the log fold change. The problem is that the statistical power of the test to compare the results depends on the absolute expression level of a given gene. Simplifying the matter a bit, genes with high expression can be measured more confidently, so we can detect smaller changes in their expression. However, small changes in expression are often biologically not very interesting. Technically, we want to filter the DEGs not only based on statistical significance, but also on the effect size, i.e.&nbsp;the absolute change in expression.</p>
@@ -401,8 +397,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="degs-and-p-value-trap-an-example" class="level3 page-columns page-full" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="degs-and-p-value-trap-an-example"><span class="header-section-number">3.3.4</span> DEGs and p-value trap: an example</h3>
+<section id="degs-and-p-value-trap-an-example" class="level3 page-columns page-full" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="degs-and-p-value-trap-an-example"><span class="header-section-number">3.3.3</span> DEGs and p-value trap: an example</h3>
 <p>In the code below, I will use data which can be found in the GEO database under accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE156063">GSE156063</a>. The expression data comes from patients who either suffered from COVID-19 or another respiratory disease (it is the same data set that I used to demonstrate the incorrect use of Venn diagrams in a previous chapter). The code to generate the results and figures below is included in this book for your pleasure.</p>
 <div class="cell">
 <details class="code-fold">

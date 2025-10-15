@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -77,11 +97,40 @@ ul.task-list li input[type="checkbox"] {
   });
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -216,11 +265,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#excel-and-gene-names" id="toc-excel-and-gene-names" class="nav-link active" data-scroll-target="#excel-and-gene-names"><span class="header-section-number">5.1</span> Excel and gene names</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -241,8 +296,37 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="excel-and-gene-names" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="excel-and-gene-names"><span class="header-section-number">5.1</span> Excel and gene names</h2>
+<p>In 2016, some scientists noticed a curious little thing. In lists of genes provided as supplementary materials to published papers here and there gene names were replaced by dates. For example, a gene name like SEPT2 (which stands for septin 2) would be replaced by the date, “September 2nd”. Other identifiers, like the RIKEN identifier “2310009E13” were converted to numbers (in this case, <span class="math inline">\(2.31 \times 10^13\)</span>). When Mark Ziemann and his colleagues systematically went through the scientific literature they found that roughly 20% of the supplementary materials contained these errors.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Gene name errors are widespread in the scientific literature <span class="citation" data-cites="ziemann2016gene">(<a href="references.html#ref-ziemann2016gene" role="doc-biblioref">Ziemann, Eren, and El-Osta 2016</a>)</span></p>
+</div></div><p>The common denominator was Excel - the spreadsheet program. Excel automatically “corrects” data it imports, changing the data types to what it “thinks” is suitable; it found names like “SEPT1” to be abbreviations of dates (rather than gene names) and was converting them automatically to dates or numbers. Since this behavior is very hard to avoid and until recently could not be completely switched off, the HUGO Gene Nomenclature Committee reached the hard and controversial decision to <em>rename the gene names</em>. SEPT2 became SEPTIN2, for example, and MARCH1 (membrane associated ring-CH-type finger 1) is now MARCHF1.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Scientists rename human genes to stop Microsoft Excel from misreading them as dates <span class="citation" data-cites="vincent2020renamegenes">(<a href="references.html#ref-vincent2020renamegenes" role="doc-biblioref">James Vincent 2020</a>)</span></p>
+</div></div><p>And <em>that</em> is not even what makes this story funny. Five years after the original publication, in 2021, Mark Ziemann with colleagues went out to check whether the situation was now better. I think that the title of their publication says it all: “Lesson not lerned”. Not only did the scientists not became more aware of the problems with their gene lists, but it turned out that Excel converts gene names based on month names <em>in different languages</em>:</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Gene name errors: Lessons not learned <span class="citation" data-cites="abeysooriya2021gene">(<a href="references.html#ref-abeysooriya2021gene" role="doc-biblioref">Abeysooriya et al. 2021</a>)</span></p>
+</div></div><blockquote class="blockquote">
+<p>In a few cases, the human gene AGO2 was converted to Aug-02 (eg: PMC5537504 &amp; PMC6244004), which may be due to Excel working in languages such as Italian, Spanish or Portugese. Similarly, the gene MEI1 was seen to be converted to May-01 (eg: PMC6065148 &amp; PMC5877863) and could be due to the similarity with the Dutch (mei). In one article (PMC5908809), TAMM41 was apparently converted to “Jan-41” due to similarity with the month of January in Finnish (tammikuu).</p>
+</blockquote>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-abeysooriya2021gene" class="csl-entry" role="listitem">
+Abeysooriya, Mandhri, Megan Soria, Mary Sravya Kasu, and Mark Ziemann. 2021. <span>“Gene Name Errors: Lessons Not Learned.”</span> <em>PLoS Computational Biology</em> 17 (7): e1008984.
+</div>
+<div id="ref-vincent2020renamegenes" class="csl-entry" role="listitem">
+James Vincent. 2020. <span>“Scientists Rename Human Genes to Stop Microsoft Excel from Misreading Them as Dates.”</span> The Verge. August 6, 2020. <a href="https://www.theverge.com/2020/8/6/21355674/human-genes-rename-microsoft-excel-misreading-dates">https://www.theverge.com/2020/8/6/21355674/human-genes-rename-microsoft-excel-misreading-dates</a>.
+</div>
+<div id="ref-ziemann2016gene" class="csl-entry" role="listitem">
+Ziemann, Mark, Yotam Eren, and Assam El-Osta. 2016. <span>“Gene Name Errors Are Widespread in the Scientific Literature.”</span> <em>Genome Biology</em> 17 (1): 177.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
