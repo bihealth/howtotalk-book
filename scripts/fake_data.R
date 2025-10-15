@@ -5,5 +5,7 @@ library(tidyverse)
 
 iris |>
   select("Sepal_Length" = Sepal.Length, Species) |>
-  filter(Species %in% c("setosa", "versicolor")) |>
+  filter(Species %in% c("virginica", "versicolor")) |>
+  group_by(Species) |>
+  slice(1:20) |>
   write.csv("iris.csv")

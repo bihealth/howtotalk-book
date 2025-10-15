@@ -198,23 +198,68 @@ results, and then your manuscript is inconsistent with itself.
 But that is not all. The most important part of is that your entire
 analysis, every operation on your data, every step, every statistical test
 or choice you have made is *automatically* documented in your code. Let me
-give you another example. I have prepared a little dataset, stored as Excel
+give you another example. I have prepared a little dataset, stored as a CSV
 file and available for download from
-[github](https://github.com/bihealth/howtotalk-book/raw/b9ea8c9e035b569fb9c5998f312ac2946f9e0868/scripts/iris.xlsx)[^iris].
+[github](https://github.com/bihealth/howtotalk-book/raw/refs/heads/main/scripts/iris.csv)[^iris].
 
 [^iris]: This is a tiny subset of the famous Iris dataset. You can find the
   whole dataset in R by typing `iris` into console.
 
 Here is the code that I include in my Quarto document to read the data and
 run a simple statistical test. I have opted to show the code below, but it
-does not have to be as visible as that in the final doucument.:
+does not have to be as visible as that in the final doucument.
 
 
+```{r}
+#| label: read-iris
+#| echo: true
+
+# the URL of the CSV file ON github
+file <- 
+  "https://github.com/bihealth/howtotalk-book/raw/refs/heads/main/scripts/iris.csv"
+
+# read the data from the URL
+data <- read.csv(file)
+
+# run a t-test comparing sepal length between two species
+# and store the result in a variable
+test_result <- t.test(Sepal_Length ~ Species, data = data)
+```
+
+I now can refer to the results of the statistical test in my text. For
+example, I can write that the difference in sepal length between the two
+species is statistically significant, with a *p*-value of 
+`r format.pval(test_result$p.value, digits=2)`, and that there were 
+`r nrow(data)` samples in
+total. None of these numbers are entered manually; if the data change, the
+results will be updated when you run Quarto again.
+
+I can also include a figure just by writing the code that generates it. The
+figure is a so-called raincloud plot, which combines a boxplot, a violin plot
+and a scatter plot -- all to demonstrate the distribution of data points.
 
 
-Take a
+```{r}
+#| label: fig-iris
+#| echo: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: "Raincloud plot showing sepal length in two species of iris"
+
+library(ggplot2) # nice plotting library
+library(ggrain)  # for raincloud plots
+
+# make a rain cloud
+ggplot(data, aes(x=Species, y=Sepal_Length)) +
+  geom_rain(alpha = 0.5) +
+  theme_minimal() +
+  labs(y="Sepal length (cm)", x="Species")
+```
+
+
+You can also take a
 look at the chapter [High throughput data analysis](htdata.html) in which
-you can find some figures and results generated from a real dataset. You
+you will find some figures and results generated from a real dataset. You
 can find the code corresponding to each figure and see precisely how I
 generated each result.
 
