@@ -199,9 +199,15 @@ But that is not all. The most important part of is that your entire
 analysis, every operation on your data, every step, every statistical test
 or choice you have made is *automatically* documented in your code. Let me
 give you another example. I have prepared a little dataset, stored as Excel
-file and available for download from [here](
+file and available for download from
+[github](https://github.com/bihealth/howtotalk-book/raw/b9ea8c9e035b569fb9c5998f312ac2946f9e0868/scripts/iris.xlsx)[^iris].
 
+[^iris]: This is a tiny subset of the famous Iris dataset. You can find the
+  whole dataset in R by typing `iris` into console.
 
+Here is the code that I include in my Quarto document to read the data and
+run a simple statistical test. I have opted to show the code below, but it
+does not have to be as visible as that in the final doucument.:
 
 
 
