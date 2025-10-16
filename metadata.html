@@ -271,6 +271,12 @@ window.Quarto = {
    
   <ul>
   <li><a href="#excel-and-gene-names" id="toc-excel-and-gene-names" class="nav-link active" data-scroll-target="#excel-and-gene-names"><span class="header-section-number">5.1</span> Excel and gene names</a></li>
+  <li><a href="#how-not-to-prepare-meta-data" id="toc-how-not-to-prepare-meta-data" class="nav-link" data-scroll-target="#how-not-to-prepare-meta-data"><span class="header-section-number">5.2</span> How (not) to prepare meta-data</a>
+  <ul class="collapse">
+  <li><a href="#make-the-data-complete-and-correct" id="toc-make-the-data-complete-and-correct" class="nav-link" data-scroll-target="#make-the-data-complete-and-correct"><span class="header-section-number">5.2.1</span> Make the data complete and correct</a></li>
+  <li><a href="#technical-advice" id="toc-technical-advice" class="nav-link" data-scroll-target="#technical-advice"><span class="header-section-number">5.2.2</span> Technical advice</a></li>
+  <li><a href="#identifiers" id="toc-identifiers" class="nav-link" data-scroll-target="#identifiers"><span class="header-section-number">5.2.3</span> Identifiers</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -313,6 +319,68 @@ window.Quarto = {
 </div></div><blockquote class="blockquote">
 <p>In a few cases, the human gene AGO2 was converted to Aug-02 (eg: PMC5537504 &amp; PMC6244004), which may be due to Excel working in languages such as Italian, Spanish or Portugese. Similarly, the gene MEI1 was seen to be converted to May-01 (eg: PMC6065148 &amp; PMC5877863) and could be due to the similarity with the Dutch (mei). In one article (PMC5908809), TAMM41 was apparently converted to “Jan-41” due to similarity with the month of January in Finnish (tammikuu).</p>
 </blockquote>
+<p>Now, I don’t blame <em>Excel</em>. I’m sure there are many valid uses of that fine program. However, I would like to give you some advice how (and in which cases) you should use it and when to be extremely cautious when editing data with Excel.</p>
+<p>For example, you might have noticed that some Excel files have the extension <code>.xls</code>, while others have the extension <code>.xlsx</code>. The latter is a newer format, and it is not only a cosmetic change. The old format, <code>.xls</code>, had a limitation on the number of rows it could handle (65,536 – or <span class="math inline">\(2^{16}\)</span>). In 2020 the results of COVID tests of almost 16,000 patients were lost – because the lab results which were sent in were stored in Excel instead of a dedicated database. This had consequences for both the reporting and handling the pandemic during its early days.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>See <a href="https://www.bbc.com/news/technology-54423988">this BBC article</a></p>
+</div></div><p>Clearly, Excel should <em>never</em> be used in critical applications like that, and even the new format (<code>.xlsx</code>) has a limit of about million rows (whereas there is no theoretical limit in other data types, such as simple CSV files or R objects). However, 65 thousand rows is quickly reached in modern applications in biology – therefore, never-ever use the old format.</p>
+<p>Here are a few tips on how to work safely and efficiently with Excel.</p>
+<p><strong>Avoid manually changing Excel files.</strong> Excel does not ensure reproducibility by tracing the changes done to a file. If you modify the meta-data, there will be no way to later on trace it back. It is a dangerous practice. If possible, use a dedicated system like RedCap or use R to modify Excel files.</p>
+</section>
+<section id="how-not-to-prepare-meta-data" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="how-not-to-prepare-meta-data"><span class="header-section-number">5.2</span> How (not) to prepare meta-data</h2>
+<p>Of the many steps that lead from data to a written manuscript, one step almost always takes me a lot of time: importing, cleaning up, understanding and formatting meta-data, the human-generated sample names, group labels, additional information about conditions etc. There is no way to automatize or standardize this, because it is inherently linked to humans – quite often, these are clinical data that have been collected by medical professionals. On top of that, each lab and even each scientist seems to follow their own, ad hoc labeling and identifier systems.</p>
+<p>The first thing you need to know is that bioinformaticians usually don’t work with Excel<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – and need to import your data into R, Python or another language.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;There is a longer explanation why in the chapter on reproducibility, but generally the point is to be able to track back every change done to the data.</p></div></div><p>In my 25 years of collaborating with others on data analysis I have seen all kinds of ways to present meta-data. Some of this way are really problematic, ranging from annoying to downright desastrous. In the following, I would like to give you a couple of hints on how to make your bioinformatician happy by facilitating their work with your meta-data.</p>
+<section id="make-the-data-complete-and-correct" class="level3 page-columns page-full" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="make-the-data-complete-and-correct"><span class="header-section-number">5.2.1</span> Make the data complete and correct</h3>
+<p>When submitting meta-data, think of all potential covariates and confounders that may matter for the projects. For example, routinely include:</p>
+<ul>
+<li>replicate ID</li>
+<li>date on which the experiment was made</li>
+<li>person who made it (if there was more than one involved)</li>
+<li>any other potential sources of batch effects</li>
+<li>characteristics of the subject, for example source of the cells<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> or the BMI and gender of the patients</li>
+<li>names of the kits, measurements which were done etc.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;for example, differentiated cell lines can come from different patients and it is crucial to have this information if more than one patient is involved – human variability plays an important role</p></div></div><p>Better too much than too little. We can handle a lot of data, and you never know what will become important. In one of my past analyses, a detrimental batch effect was attributed to malfunctioning hybridization oven based on IDs of the arrays and information on when and at which position in the oven the arrays were placed.</p>
+<p>However, be careful to not include any incorrect data. If there are any ambiguities or issues with the data, please indicate them in a separate column. The fact that wrong data propagates and persists has been already recognized by Charles Darwin:</p>
+<blockquote class="blockquote">
+<p>False facts are highly injurious to the progress of science, for they often endure long; but false views, if supported by some evidence, do little harm, for every one takes a salutary pleasure in proving their falseness: and when this is done, one path towards error is closed and the road to truth is often at the same time opened. (“The Descent of Man”, Charles Darwin)</p>
+</blockquote>
+</section>
+<section id="technical-advice" class="level3 page-columns page-full" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="technical-advice"><span class="header-section-number">5.2.2</span> Technical advice</h3>
+<p>This is mostly a list of <strong>don’ts</strong>. Some of them are crucial because they can lead to errors or data loss. All of them stem from the principle that I want to modify your meta data as little as possible to avoid error and misinterpretations.</p>
+<p><strong>Don’t combine values and comments</strong>. If you have comments to your data points, put them in a separate column. Comments entered directly behind the values mess up data import and can cause data loss.</p>
+<p><strong>Do not use merged cells.</strong> Merging cells is a typographic operation. You should never do it in Excel tables. It makes data import error prone an dtedious.</p>
+<p><strong>Do not encode meta-data as color.</strong> You can use color, of course, but never <em>instead</em> of a column explicitely describing a variable. Firstly, color (and other formatting) can get lost or changed during data import to other programs (or even Excel versions). Second, even if one were to inspect Excel sheets visually (we normally import them first), some of us are colorblind, and colors can be a problem.</p>
+<p><strong>Don’t put meta-information into column names</strong>. For example, avoid column names like “Age (in months)” or “Sex (0 for males, 1 for females)”. Keep column names short and succint, and add another sheet which explains what the column names mean, i.e.&nbsp;contains columns “Column”, “Comment” which contain values like “Sex”, “0 for males, 1 for females”.</p>
+<p><strong>One sheet = one table</strong>. If you have an additional table, put it into another sheet. Never put two tables of different sizes on the same sheet. It makes data import tedious and error prone.</p>
+<p><strong>Header = one, first line.</strong> The table header column should take one line<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. If you need to add information on your column names, additional data etc., then add another table in another sheet. The header should be the first line in a sheet. Do not include empty lines.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Not two, not three… four is right out.</p></div></div><p><strong>Avoid spaces and special characters in column names.</strong> This is not a deal breaker, but can lead to misunderstandings and misinformation. For example, if you have a column name called “μg” (microgram), this can get transliterated in data import to “mg” (because the greek letter <em>μ</em> corresponds to the latin letter <em>m</em>) which of course is not what you mean.</p>
+<p><strong>Replace spaces in file and column names by underscores</strong>. Again, not a deal breaker, but it makes our life a little easier. For example, if you have a column called <code>body weight</code>, I have to put it in quotes like this: <code>"body weight"</code>, because otherwise some of my programs will think that I mean two columns files, <code>body</code> and <code>weight</code>. Use insted <code>body_weight</code>. I can change it myself, but the less changes I make to your data, the lower the probability of the error.</p>
+<p><strong>Use consistent file names.</strong> Try to standardize the file names you create. The file name should not be too long, but informative, and it should optimally include a version designation and a date.</p>
+<p><strong>Never use the same file name for different data.</strong> If you change the data in your file, the file name should reflect the change. The moment that you share the file with someone<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and <em>then</em> modify it, you <strong>must</strong> change the file name. Otherwise the file you disseminated and your local file differ. Of course, there are whole systems that do that automatically, but not in a desktop / Excel setting. If you don’t follow the advice, great confusion will arise, the data will messed up, the civilization will fall and the world will burn. This advice goes for all files you are using, including manuscripts.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Obviously I am not talking about a situation when you work with one file which exists only on your disk and you are currently working with it.</p></div></div></section>
+<section id="identifiers" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="identifiers"><span class="header-section-number">5.2.3</span> Identifiers</h3>
+<p>Identifiers are always a major source of headache, for everyone. If you need proof, go to the Gene Cards and check out how many different aliases, symbols and proper identifiers the <a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=TNF">TNF</a> (tumor necrosis factor) gene has. In theory, an identifier should uniquely define the entitity that it labels. In practice, we tend to simplify identifiers because it’s simpler (and less writing), starting with simple numbers sketched on an Eppendorf tube.</p>
+<p>The problem with simple identifiers is cross-contamination. If you only use numbers as identifiers or something almost as simple like “S1”, “S2” etc., then these identifiers can be easily confused between projects (or even batches). And then you will have different identifiers associated with your samples – for example, the identifier of the patients, the sample, the replicate etc. Optimally, the identifiers should have at least the following three properties:</p>
+<ul>
+<li>Identifiers are unique – associated only with one sample (or other entity)</li>
+<li>Identifiers are stable – you don’t change them all the time</li>
+<li>Identifiers are machine-readable – they can be easily parsed by programs.</li>
+</ul>
+<p>Of course, I used to work in a lab and I know that you can fit only so many letters on an Eppendorf tube. Still, as soon as possible you should assign proper identifiers to the samples that you are analysing (or want me to analyse). Here are a few do’s and don’ts regarding identifiers:</p>
+<p><strong>Do use identifiers.</strong>. Do the future you a big favor and start using proper identifiers for your samples if you are not using them yet. Just trust me on that.</p>
+<p><strong>Never remove columns with “unneeded” identifiers.</strong> If you have some obsolete or older identifiers (like the numbers from your original test tube), you should keep them in your Excel file together with your data. Otherwise you might get an “involuntary anonymization”, i.e.&nbsp;lose the origin of the data.</p>
+<p><strong>Never use “pure numerical” identifiers</strong>. Pure numerical identifiers (<code>1</code>, <code>2</code>, <code>3</code>, …) can be to easily confused with other numeric labels (like row numbers). Best avoid it.</p>
+<p><strong>Only use letters, numbers, decimal points and underscores</strong>. Never use any other characters. The way identifiers are used</p>
+<p><strong>Be consistent.</strong> If you identifier is, say, <code>S1</code>, then always refer to that sample as <code>S1</code>, not <code>Smp. 1</code> or <code>1</code> or <code>Sample 1</code>.</p>
+<p><strong>Use dedicated prefixes.</strong> Optimally, you should use a prefix for a study / cohort / experiment which would make your identifiers unique in the world, like <code>RCDB2024_S1</code>, <code>RCDB2024_S2</code>, <code>RCDB2025_S1</code>, <code>RCDB2025_S2</code></p>
+<p><strong>Composite identifiers are fine</strong>, as long as you use them consistently: For example <code>WT_treatment_1</code>, <code>KO_control_2</code> but not <code>WT_treatment_1</code>, <code>KO-2-control</code>, <code>WT_ctrl2</code>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -327,6 +395,8 @@ Ziemann, Mark, Yotam Eren, and Assam El-Osta. 2016. <span>“Gene Name Errors Ar
 </div>
 </div>
 </section>
+</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
