@@ -20,7 +20,6 @@ a t-test is simple enough, but in real world the applications are often
 much more complex. On top of it, many bioinformaticians or computational
 biologists have also a very limited understanding of statistics.  
 
-
 **Coding**. Popular language choices include Python and R; Python is more
 widely spread among computer scientists, but has a slightly steeper
 learning curve. If you plan to code a lot, Python will be a good choice. R,

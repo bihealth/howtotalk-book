@@ -126,9 +126,6 @@ severly reduces the statistical power of the analysis.
 
 
 
-### To log or not to log
-
-
 ### The scourge of the absolute thresholds
 
 A question that often arises in the context of HT data analysis is: "so how

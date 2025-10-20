@@ -1,1 +1,361 @@
 # Preparing Meta Data
+
+## Excel and gene names
+
+In 2016, some scientists noticed a curious little thing. In lists of genes
+provided as supplementary materials to published papers here and there gene
+names were replaced by dates. For example, a gene name like SEPT2 (which
+stands for septin 2) would be replaced by the date, "September 2nd". Other
+identifiers, like the RIKEN identifier "2310009E13" were converted to
+numbers (in this case, $2.31 \times 10^{13}$). When Mark Ziemann and his
+colleagues systematically went through the scientific literature they found
+that roughly 20% of the supplementary materials contained these errors. 
+
+::: {.aside}
+Gene name errors are widespread in the scientific literature
+[@ziemann2016gene]
+:::
+
+
+The common denominator was Excel - the spreadsheet program. Excel
+automatically "corrects" data it imports, changing the data types to what
+it "thinks" is suitable; it found names like "SEPT1" to be abbreviations of
+dates (rather than gene names) and was converting them automatically to
+dates or numbers.
+Since this behavior is very hard to avoid and until
+recently could not be completely switched off, the HUGO Gene Nomenclature
+Committee reached the hard and controversial decision to *rename the gene
+names*. SEPT2 became SEPTIN2, for example, and MARCH1 (membrane associated
+ring-CH-type finger 1) is now MARCHF1.
+
+::: {.aside}
+Scientists rename human genes to stop Microsoft Excel from misreading them as dates
+[@vincent2020renamegenes]
+:::
+
+And *that* is not even what makes this story funny. Five years after the
+original publication, in 2021, Mark Ziemann with colleagues went out to check whether the situation
+was now better. I think that the title of their publication says it all:
+"Lesson not lerned". Not only did the scientists not became more aware of the
+problems with their gene lists and the percentage of erroneous
+supplementary materials rose to 30%, but it turned out that Excel converts gene
+names based on month names *in different languages*: 
+
+::: {.aside}
+Gene name errors: Lessons not learned
+[@abeysooriya2021gene]
+:::
+
+>  In a few cases, the human gene AGO2 was converted to Aug-02 (eg:
+>  PMC5537504 & PMC6244004), which may be due to Excel working in languages
+>  such as Italian, Spanish or Portugese. Similarly, the gene MEI1 was seen
+>  to be converted to May-01 (eg: PMC6065148 & PMC5877863) and could be due
+>  to the similarity with the Dutch (mei). In one article (PMC5908809),
+>  TAMM41 was apparently converted to “Jan-41” due to similarity with the
+>  month of January in Finnish (tammikuu).
+
+Now, I don't blame *Excel*. I'm sure there are many valid uses of that fine
+program. However, I would like to give you some advice how (and in which
+cases) you should use it and when to be extremely cautious when editing
+data with Excel.
+
+For example, you might have noticed that some Excel files have the
+extension `.xls`, while others have the extension `.xlsx`. The latter is a
+newer format, and it is not only a cosmetic change. The old format, `.xls`,
+had a limitation on the number of rows it could handle (65,536 – or
+$2^{16}$). In 2020 the results of COVID tests of almost 16,000 patients
+were lost – because the lab results which were sent in were stored in Excel
+instead of a dedicated database. This had consequences for both the
+reporting and handling the pandemic during its early days.
+
+::: {.aside}
+See [this BBC article](https://www.bbc.com/news/technology-54423988)
+:::
+
+Clearly, Excel should *never* be used in critical applications like that,
+and even the new format (`.xlsx`) has a limit of about million rows
+(whereas there is no theoretical limit in other data types, such as simple
+CSV files or R objects). However, 65 thousand rows is quickly reached in
+modern applications in biology – therefore, never-ever use the old format.
+
+Here are a few tips on how to work safely and efficiently with Excel.
+
+
+
+## How (not) to prepare meta-data
+
+Of the many steps that lead from data to a written manuscript, one step
+almost always takes me a lot of time: importing, cleaning up, understanding
+and formatting meta-data, the human-generated sample names, group labels,
+additional information about conditions etc. There is no way to automatize
+or standardize this, because it is inherently linked to humans – quite
+often, these are clinical data that have been collected by medical
+professionals. On top of that, each lab and even each scientist seems to
+follow their own, ad hoc labeling and identifier systems. 
+
+The first thing you need to know is that bioinformaticians usually don't
+work with Excel[^excel2] – and need to import your data into R, Python or another
+language. That means that some things that seem easy or simple in Excel
+(like seeing which samples are colored in green) becomes problematic (and
+vice versa, other things, like maintaining scientific reproducibility,
+become possible).
+
+[^excel2]: There is a longer explanation why further in this chapter,
+  but generally the point is to be able to track back
+  every change done to the data.
+
+The second thing that you need to know is that you are not compiling the
+meta-data for yourself, even if you think you do. Sooner than you expect
+there will come a day when you will have to share your meta-data with
+others. A little care at the beginning of the project in how you create
+these files and choose your identifiers will go a long way in future in
+terms of avoiding confusion, mistakes and general mayhem.
+
+In my 25 years of collaborating with others on data analysis I have seen
+all kinds of ways to present meta-data. Some of these are really
+problematic, ranging from annoying to downright desastrous. In the
+following, I would like to give you a couple of hints on how to make your
+bioinformatician happy by facilitating their work with your meta-data.
+
+### Make the data complete and correct
+
+When submitting meta-data, think of all potential covariates and
+confounders that may matter for the projects. For example, routinely
+include:
+
+ * replicate ID
+ * date on which the experiment was made
+ * person who made it (if there was more than one involved)
+ * any other potential sources of batch effects
+ * characteristics of the subject, for example source of the cells[^cells]
+   or the BMI and gender of the patients
+ * names of the kits, measurements which were done etc.
+
+Better too much than too little. We can handle a lot of data, and you never
+know what will become important. In one of my past analyses, a detrimental
+batch effect was attributed to malfunctioning hybridization oven based on
+IDs of the arrays and information on when and at which position in the oven
+the arrays were placed.
+
+[^cells]: for example, differentiated cell lines can come from different
+  patients and it is crucial to have this information if more than one
+  patient is involved – human variability plays an important role
+
+However, be careful to not include any incorrect data. If there are any
+ambiguities or issues with the data, please indicate them in a separate
+column. The fact that wrong data propagates and persists has been already
+recognized by Charles Darwin:
+
+> False facts are highly injurious to the progress of science, for they
+> often endure long; but false views, if supported by some evidence, do
+> little harm, for every one takes a salutary pleasure in proving their
+> falseness: and when this is done, one path towards error is closed and
+> the road to truth is often at the same time opened. ("The Descent of Man",
+> Charles Darwin)
+
+### Technical advice
+
+This is mostly a list of **don'ts**. Some of them are crucial because they
+can lead to errors or data loss. All of them stem from the principle that I
+want to modify your meta data as little as possible to avoid error and
+misinterpretations.
+
+**Don't combine values and comments**. If you have comments to your data
+points, put them in a separate column. Comments entered directly behind the
+values mess up data import and can cause data loss.
+
+**Do not use merged cells.** Merging cells is a typographic operation. You
+should never do it in Excel tables. It makes data import error prone an
+dtedious.
+
+**Do not encode meta-data as color.** You can use color, of course, but
+never *instead* of a column explicitely describing a variable. Firstly,
+color (and other formatting) can get lost or changed during data import to
+other programs (or even Excel versions). Second, even if one were to
+inspect Excel sheets visually (we normally import them first), some of us
+are colorblind, and colors can be a problem.
+
+**Don't put meta-information into column names**. For example, avoid column
+names like "Age (in months)" or "Sex (0 for males, 1 for females)". Keep
+column names short and succint, and add another sheet which explains what
+the column names mean, i.e. contains columns "Column", "Comment" which
+contain values like "Sex", "0 for males, 1 for females".
+
+**One sheet = one table**. If you have an additional table, put it into
+another sheet. Never put two tables of different sizes on the same sheet.
+It makes data import tedious and error prone.
+
+**Header = one, first line.** The table header column should take one
+line[^nottwo]. If you need to add information on your column names,
+additional data etc., then add another table in another sheet. The header
+should be the first line in a sheet. Do not include empty lines.
+
+[^nottwo]: Not two, not three... four is right out. 
+
+**Avoid spaces and special characters in column names.** This is not a deal
+breaker, but can lead to misunderstandings and misinformation. For example,
+if you have a column name called "μg" (microgram), this can get
+transliterated in data import to "mg" (because the greek letter *μ*
+corresponds to the latin letter *m*) which of course is not what you mean.
+
+**Replace spaces in file and column names by underscores**. Again, not a
+deal breaker, but it makes our life a little easier. For example, if you
+have a column called `body weight`, I have to put it in quotes like this:
+`"body weight"`, because otherwise some of my programs will think that I
+mean two columns files, `body` and `weight`. Use insted `body_weight`. I can
+change it myself, but the less changes I make to your data, the lower the
+probability of the error.
+
+**Use consistent file names.** Try to standardize the file names you
+create. The file name should not be too long, but informative, and it
+should optimally include a version designation and a date. 
+
+**Never use the same file name for different data.** If you change the data
+in your file, the file name should reflect the change. The moment that you
+share the file with someone[^obviously] and *then* modify it, you **must**
+change the file name. Otherwise the file you disseminated and your local
+file differ. Of course, there are whole systems that do that automatically,
+but not in a desktop / Excel setting. If you don't follow the advice, great
+confusion will arise, the data will messed up, the civilization will fall
+and the world will burn. This advice goes for all files you are using,
+including manuscripts.
+
+[^obviously]: Obviously I am not talking about a situation when you work
+  with one file which exists only on your disk and you are currently
+  working with it. 
+
+
+### Identifiers
+
+Identifiers are always a major source of headache, for everyone. If you
+need proof, go to the Gene Cards and check out how many different aliases,
+symbols and proper identifiers the 
+[TNF](https://www.genecards.org/cgi-bin/carddisp.pl?gene=TNF) (tumor
+necrosis factor) gene has.
+In theory, an identifier should uniquely define the entitity that it
+labels. In practice, we tend to simplify identifiers because it's simpler
+(and less writing), starting with simple numbers sketched on an Eppendorf
+tube.
+
+The problem with simple identifiers is cross-contamination. If you only use
+numbers as identifiers or something almost as simple like "S1", "S2" etc.,
+then these identifiers can be easily confused between projects (or even
+batches).  And then you will have different identifiers associated with
+your samples – for example, the identifier of the patients, the sample, the
+replicate etc. Optimally, the identifiers should have at least the
+following three properties:
+
+ * Identifiers are unique – associated only with one sample (or other entity)
+ * Identifiers are stable – you don't change them all the time
+ * Identifiers are machine-readable – they can be easily parsed by
+   programs.
+
+Of course, I used to work in a lab and I know that you can fit only so many
+letters on an Eppendorf tube. Still, as soon as possible you should assign
+proper identifiers to the samples that you are analysing (or want me to
+analyse). Here are a few do's and don'ts regarding identifiers:
+
+**Do use identifiers.**. Do the future you a big favor and start using
+proper identifiers for your samples if you are not using them yet. Just
+trust me on that.
+
+**Never remove columns with "unneeded" identifiers.** If you have some
+obsolete or older identifiers (like the numbers from your original test
+tube), you should keep them in your Excel file together with your data.
+Otherwise you might get an "involuntary anonymization", i.e. lose the
+origin of the data.
+
+**Never use "pure numerical" identifiers**. Pure numerical identifiers
+(`1`, `2`, `3`, ...) can be to easily confused with other numeric labels
+(like row numbers). Best avoid it.
+
+**Only use letters, numbers, decimal points and underscores**. Never use
+any other characters. The way identifiers might be used later in a
+different environment (like a data base or programming language) makes it
+safer and less error-prone.
+
+**Be consistent.** If you identifier is, say, `S1`, then always refer to
+that sample as `S1`, not `Smp. 1` or `1` or `Sample 1`.
+
+**Use dedicated prefixes.** Optimally, you should use a prefix for a study / 
+cohort / experiment which would make your identifiers unique in the
+world, like `RCDB2024_S1`, `RCDB2024_S2`, `RCDB2025_S1`, `RCDB2025_S2`
+
+**Composite identifiers are fine**, as long as you use them consistently:
+For example `WT_treatment_1`, `KO_control_2` but not `WT_treatment_1`,
+`KO-2-control`, `WT_ctrl2`.
+
+## Why not Excel?
+
+I mentioned before that bioinformaticians usually don't work with
+Excel[^openoffice].
+Now, we of course work with Excel *files*, as this is how we often get our
+data and how we make the data accessible to others. However, there is a
+very good reason why changing any data in Excel should be avoided, and it
+is this:
+
+[^openoffice]: I am writing about Excel, because it is the most commonly
+  used program, but it also applies to OpenOffice, Google spreasheets,
+  gnumeric and other Excel-like programs.
+
+
+::: {.callout-important icon=false collapse=false appearance="simple"}
+Modifications in Excel cannot be traced back.
+:::
+
+Say, you found that in a cell in an Excel spreadsheet there is a typo, for
+example "emale" instead of "female". You correct that typo and save your
+file. So far, so good. Clearly that is not the only thing that you do in
+Excel – usually cleaning up and preparing the data and meta-data takes a
+lot of time.
+
+But what happens if down the line you or someone else finds a weird
+incongruency – in a clinical trial with 50 males and 50 females the data
+show actually 51 females and 49 males? Turns out that this "emale" was
+actually a typo in "male". Unless you have a better memory than me, you
+don't remember that you made this one little correction and if you do, you
+do not remember which patient was that. You now have to go back to the
+original version of the spreadsheet (which you hopefully have) and try to
+find it.
+
+Think about it like this: when you go to the lab and run an experiment, you
+write down a protocol with the things you did so you have a record which
+can be examined, compared and reproduced. When you modify an Excel
+spreadsheet, you don't. How will you know in a year or two how the data was
+modified at this stage?
+
+If you clean the data in R, Python or another programming language, you
+will have a script that you used to read, modify and save the data, and in
+it you will have a line similar to this one:
+
+
+```{r eval=FALSE}
+#| label: example-data-modification
+
+# replace all occurences of "emale" with "female"
+meta[ meta$sex == "emale" ] <- "female"
+```
+
+The information will be clear and available on the first glance.
+
+But wait, there is more. Say you work with medical professionals who
+collect the data for you. A couple of months into the project, they send
+you an updated version of the meta data. However, the typos – and all the
+other stuff you had to correct in the original Excel file – are still
+there. All the heavy work you did in Excel to clean up the data needs to be
+repeated. If you were importing the data with a script, your job is
+relatively easy: you just need to re-run the script, and potentially add a
+few lines accounting for new mistakes. If you clean up the data in Excel,
+not only will you have to repeat all the steps – chances are you will not
+manage to *precisely* repeat all the steps like you did before. It is an
+error prone, unreproducible process.
+
+::: {.callout-important icon=false collapse=false appearance="simple"}
+Avoid manually changing Excel files.  Excel does not ensure
+reproducibility by tracing the changes done to a file. If you modify the
+meta-data, there will be no way to trace it back later. It is a
+dangerous practice. If possible, use a dedicated system like RedCap or use
+R to modify Excel files.
+:::
+
+

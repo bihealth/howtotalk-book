@@ -5,7 +5,7 @@ project:
 book:
   title: "How to talk to your bioinformatician"
   author: "January Weiner"
-  date: "12/10/2025"
+  date: "10/12/2025"
   reader-mode: true
   chapters:
     - index.qmd
@@ -13,6 +13,7 @@ book:
     - htdata.qmd
     - reproducibility.qmd
     - metadata.qmd
+    - visualizations.qmd
     - wheretogo.qmd
     - references.qmd
   sidebar:
@@ -33,6 +34,8 @@ book:
         href: "reproducibility.qmd"
       - text: "Preparing metadata"
         href: "metadata.qmd"
+      - text: "Visualizing data"
+        href: "visualizations.qmd"
       - text: "Where to go from here"
         href: "wheretogo.qmd"
 
