@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -277,6 +311,7 @@ window.Quarto = {
   <li><a href="#technical-advice" id="toc-technical-advice" class="nav-link" data-scroll-target="#technical-advice"><span class="header-section-number">5.2.2</span> Technical advice</a></li>
   <li><a href="#identifiers" id="toc-identifiers" class="nav-link" data-scroll-target="#identifiers"><span class="header-section-number">5.2.3</span> Identifiers</a></li>
   </ul></li>
+  <li><a href="#why-not-excel" id="toc-why-not-excel" class="nav-link" data-scroll-target="#why-not-excel"><span class="header-section-number">5.3</span> Why not Excel?</a></li>
   </ul>
 </nav>
     </div>
@@ -304,7 +339,7 @@ window.Quarto = {
 
 <section id="excel-and-gene-names" class="level2 page-columns page-full" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="excel-and-gene-names"><span class="header-section-number">5.1</span> Excel and gene names</h2>
-<p>In 2016, some scientists noticed a curious little thing. In lists of genes provided as supplementary materials to published papers here and there gene names were replaced by dates. For example, a gene name like SEPT2 (which stands for septin 2) would be replaced by the date, “September 2nd”. Other identifiers, like the RIKEN identifier “2310009E13” were converted to numbers (in this case, <span class="math inline">\(2.31 \times 10^13\)</span>). When Mark Ziemann and his colleagues systematically went through the scientific literature they found that roughly 20% of the supplementary materials contained these errors.</p>
+<p>In 2016, some scientists noticed a curious little thing. In lists of genes provided as supplementary materials to published papers here and there gene names were replaced by dates. For example, a gene name like SEPT2 (which stands for septin 2) would be replaced by the date, “September 2nd”. Other identifiers, like the RIKEN identifier “2310009E13” were converted to numbers (in this case, <span class="math inline">\(2.31 \times 10^{13}\)</span>). When Mark Ziemann and his colleagues systematically went through the scientific literature they found that roughly 20% of the supplementary materials contained these errors.</p>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>Gene name errors are widespread in the scientific literature <span class="citation" data-cites="ziemann2016gene">(<a href="references.html#ref-ziemann2016gene" role="doc-biblioref">Ziemann, Eren, and El-Osta 2016</a>)</span></p>
@@ -312,7 +347,7 @@ window.Quarto = {
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>Scientists rename human genes to stop Microsoft Excel from misreading them as dates <span class="citation" data-cites="vincent2020renamegenes">(<a href="references.html#ref-vincent2020renamegenes" role="doc-biblioref">James Vincent 2020</a>)</span></p>
-</div></div><p>And <em>that</em> is not even what makes this story funny. Five years after the original publication, in 2021, Mark Ziemann with colleagues went out to check whether the situation was now better. I think that the title of their publication says it all: “Lesson not lerned”. Not only did the scientists not became more aware of the problems with their gene lists, but it turned out that Excel converts gene names based on month names <em>in different languages</em>:</p>
+</div></div><p>And <em>that</em> is not even what makes this story funny. Five years after the original publication, in 2021, Mark Ziemann with colleagues went out to check whether the situation was now better. I think that the title of their publication says it all: “Lesson not lerned”. Not only did the scientists not became more aware of the problems with their gene lists and the percentage of erroneous supplementary materials rose to 30%, but it turned out that Excel converts gene names based on month names <em>in different languages</em>:</p>
 
 <div class="no-row-height column-margin column-container"><div class="margin-aside">
 <p>Gene name errors: Lessons not learned <span class="citation" data-cites="abeysooriya2021gene">(<a href="references.html#ref-abeysooriya2021gene" role="doc-biblioref">Abeysooriya et al. 2021</a>)</span></p>
@@ -326,13 +361,13 @@ window.Quarto = {
 <p>See <a href="https://www.bbc.com/news/technology-54423988">this BBC article</a></p>
 </div></div><p>Clearly, Excel should <em>never</em> be used in critical applications like that, and even the new format (<code>.xlsx</code>) has a limit of about million rows (whereas there is no theoretical limit in other data types, such as simple CSV files or R objects). However, 65 thousand rows is quickly reached in modern applications in biology – therefore, never-ever use the old format.</p>
 <p>Here are a few tips on how to work safely and efficiently with Excel.</p>
-<p><strong>Avoid manually changing Excel files.</strong> Excel does not ensure reproducibility by tracing the changes done to a file. If you modify the meta-data, there will be no way to later on trace it back. It is a dangerous practice. If possible, use a dedicated system like RedCap or use R to modify Excel files.</p>
 </section>
 <section id="how-not-to-prepare-meta-data" class="level2 page-columns page-full" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="how-not-to-prepare-meta-data"><span class="header-section-number">5.2</span> How (not) to prepare meta-data</h2>
 <p>Of the many steps that lead from data to a written manuscript, one step almost always takes me a lot of time: importing, cleaning up, understanding and formatting meta-data, the human-generated sample names, group labels, additional information about conditions etc. There is no way to automatize or standardize this, because it is inherently linked to humans – quite often, these are clinical data that have been collected by medical professionals. On top of that, each lab and even each scientist seems to follow their own, ad hoc labeling and identifier systems.</p>
-<p>The first thing you need to know is that bioinformaticians usually don’t work with Excel<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – and need to import your data into R, Python or another language.</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;There is a longer explanation why in the chapter on reproducibility, but generally the point is to be able to track back every change done to the data.</p></div></div><p>In my 25 years of collaborating with others on data analysis I have seen all kinds of ways to present meta-data. Some of this way are really problematic, ranging from annoying to downright desastrous. In the following, I would like to give you a couple of hints on how to make your bioinformatician happy by facilitating their work with your meta-data.</p>
+<p>The first thing you need to know is that bioinformaticians usually don’t work with Excel<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – and need to import your data into R, Python or another language. That means that some things that seem easy or simple in Excel (like seeing which samples are colored in green) becomes problematic (and vice versa, other things, like maintaining scientific reproducibility, become possible).</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;There is a longer explanation why further in this chapter, but generally the point is to be able to track back every change done to the data.</p></div></div><p>The second thing that you need to know is that you are not compiling the meta-data for yourself, even if you think you do. Sooner than you expect there will come a day when you will have to share your meta-data with others. A little care at the beginning of the project in how you create these files and choose your identifiers will go a long way in future in terms of avoiding confusion, mistakes and general mayhem.</p>
+<p>In my 25 years of collaborating with others on data analysis I have seen all kinds of ways to present meta-data. Some of these are really problematic, ranging from annoying to downright desastrous. In the following, I would like to give you a couple of hints on how to make your bioinformatician happy by facilitating their work with your meta-data.</p>
 <section id="make-the-data-complete-and-correct" class="level3 page-columns page-full" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="make-the-data-complete-and-correct"><span class="header-section-number">5.2.1</span> Make the data complete and correct</h3>
 <p>When submitting meta-data, think of all potential covariates and confounders that may matter for the projects. For example, routinely include:</p>
@@ -377,10 +412,48 @@ window.Quarto = {
 <p><strong>Do use identifiers.</strong>. Do the future you a big favor and start using proper identifiers for your samples if you are not using them yet. Just trust me on that.</p>
 <p><strong>Never remove columns with “unneeded” identifiers.</strong> If you have some obsolete or older identifiers (like the numbers from your original test tube), you should keep them in your Excel file together with your data. Otherwise you might get an “involuntary anonymization”, i.e.&nbsp;lose the origin of the data.</p>
 <p><strong>Never use “pure numerical” identifiers</strong>. Pure numerical identifiers (<code>1</code>, <code>2</code>, <code>3</code>, …) can be to easily confused with other numeric labels (like row numbers). Best avoid it.</p>
-<p><strong>Only use letters, numbers, decimal points and underscores</strong>. Never use any other characters. The way identifiers are used</p>
+<p><strong>Only use letters, numbers, decimal points and underscores</strong>. Never use any other characters. The way identifiers might be used later in a different environment (like a data base or programming language) makes it safer and less error-prone.</p>
 <p><strong>Be consistent.</strong> If you identifier is, say, <code>S1</code>, then always refer to that sample as <code>S1</code>, not <code>Smp. 1</code> or <code>1</code> or <code>Sample 1</code>.</p>
 <p><strong>Use dedicated prefixes.</strong> Optimally, you should use a prefix for a study / cohort / experiment which would make your identifiers unique in the world, like <code>RCDB2024_S1</code>, <code>RCDB2024_S2</code>, <code>RCDB2025_S1</code>, <code>RCDB2025_S2</code></p>
 <p><strong>Composite identifiers are fine</strong>, as long as you use them consistently: For example <code>WT_treatment_1</code>, <code>KO_control_2</code> but not <code>WT_treatment_1</code>, <code>KO-2-control</code>, <code>WT_ctrl2</code>.</p>
+</section>
+</section>
+<section id="why-not-excel" class="level2 page-columns page-full" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="why-not-excel"><span class="header-section-number">5.3</span> Why not Excel?</h2>
+<p>I mentioned before that bioinformaticians usually don’t work with Excel<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Now, we of course work with Excel <em>files</em>, as this is how we often get our data and how we make the data accessible to others. However, there is a very good reason why changing any data in Excel should be avoided, and it is this:</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;I am writing about Excel, because it is the most commonly used program, but it also applies to OpenOffice, Google spreasheets, gnumeric and other Excel-like programs.</p></div></div><div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Modifications in Excel cannot be traced back.</p>
+</div>
+</div>
+</div>
+<p>Say, you found that in a cell in an Excel spreadsheet there is a typo, for example “emale” instead of “female”. You correct that typo and save your file. So far, so good. Clearly that is not the only thing that you do in Excel – usually cleaning up and preparing the data and meta-data takes a lot of time.</p>
+<p>But what happens if down the line you or someone else finds a weird incongruency – in a clinical trial with 50 males and 50 females the data show actually 51 females and 49 males? Turns out that this “emale” was actually a typo in “male”. Unless you have a better memory than me, you don’t remember that you made this one little correction and if you do, you do not remember which patient was that. You now have to go back to the original version of the spreadsheet (which you hopefully have) and try to find it.</p>
+<p>Think about it like this: when you go to the lab and run an experiment, you write down a protocol with the things you did so you have a record which can be examined, compared and reproduced. When you modify an Excel spreadsheet, you don’t. How will you know in a year or two how the data was modified at this stage?</p>
+<p>If you clean the data in R, Python or another programming language, you will have a script that you used to read, modify and save the data, and in it you will have a line similar to this one:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace all occurences of "emale" with "female"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>meta[ meta<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"emale"</span> ] <span class="ot">&lt;-</span> <span class="st">"female"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The information will be clear and available on the first glance.</p>
+<p>But wait, there is more. Say you work with medical professionals who collect the data for you. A couple of months into the project, they send you an updated version of the meta data. However, the typos – and all the other stuff you had to correct in the original Excel file – are still there. All the heavy work you did in Excel to clean up the data needs to be repeated. If you were importing the data with a script, your job is relatively easy: you just need to re-run the script, and potentially add a few lines accounting for new mistakes. If you clean up the data in Excel, not only will you have to repeat all the steps – chances are you will not manage to <em>precisely</em> repeat all the steps like you did before. It is an error prone, unreproducible process.</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Avoid manually changing Excel files. Excel does not ensure reproducibility by tracing the changes done to a file. If you modify the meta-data, there will be no way to trace it back later. It is a dangerous practice. If possible, use a dedicated system like RedCap or use R to modify Excel files.</p>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -394,7 +467,6 @@ James Vincent. 2020. <span>“Scientists Rename Human Genes to Stop Microsoft 
 Ziemann, Mark, Yotam Eren, and Assam El-Osta. 2016. <span>“Gene Name Errors Are Widespread in the Scientific Literature.”</span> <em>Genome Biology</em> 17 (1): 177.
 </div>
 </div>
-</section>
 </section>
 
 
