@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -285,8 +319,13 @@ window.Quarto = {
   <li><a href="#spurious-results-can-be-very-convincing" id="toc-spurious-results-can-be-very-convincing" class="nav-link" data-scroll-target="#spurious-results-can-be-very-convincing"><span class="header-section-number">2.3.4</span> Spurious results can be very convincing</a></li>
   <li><a href="#statistically-significant-is-not-the-same-as-significant" id="toc-statistically-significant-is-not-the-same-as-significant" class="nav-link" data-scroll-target="#statistically-significant-is-not-the-same-as-significant"><span class="header-section-number">2.3.5</span> Statistically significant is not the same as significant</a></li>
   <li><a href="#we-treat-p-values-with-too-much-reverence" id="toc-we-treat-p-values-with-too-much-reverence" class="nav-link" data-scroll-target="#we-treat-p-values-with-too-much-reverence"><span class="header-section-number">2.3.6</span> We treat p-values with too much reverence</a></li>
+  <li><a href="#what-to-do-with-p-values" id="toc-what-to-do-with-p-values" class="nav-link" data-scroll-target="#what-to-do-with-p-values"><span class="header-section-number">2.3.7</span> What to do with p-values</a></li>
   </ul></li>
-  <li><a href="#what-to-do-with-p-values" id="toc-what-to-do-with-p-values" class="nav-link" data-scroll-target="#what-to-do-with-p-values"><span class="header-section-number">3</span> What to do with p-values</a></li>
+  <li><a href="#effect-sizes-matter" id="toc-effect-sizes-matter" class="nav-link" data-scroll-target="#effect-sizes-matter"><span class="header-section-number">2.4</span> Effect sizes matter</a>
+  <ul class="collapse">
+  <li><a href="#how-significant-is-statistically-significant" id="toc-how-significant-is-statistically-significant" class="nav-link" data-scroll-target="#how-significant-is-statistically-significant"><span class="header-section-number">2.4.1</span> How significant is “statistically significant”?</a></li>
+  <li><a href="#is-the-difference-large-enough" id="toc-is-the-difference-large-enough" class="nav-link" data-scroll-target="#is-the-difference-large-enough"><span class="header-section-number">2.4.2</span> Is the difference large enough?</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -468,6 +507,36 @@ window.Quarto = {
 <p>Andrew Gelman coined the phrase “the difference between statistically significant and non-significant is not, itself, statistically significant”. What it means is this: if in one comparison you get a statistically significant difference, and in the other one you see that there is no significant difference, then you cannot conclude that the there is a difference between comparisons.</p>
 <p>Oh my, I think I have utterly confused you now. I think, however, that the problem is important and worth looking into, because while it is a surprisingly common way of reasoning, it is utterly wrong and can lead you astray.</p>
 <p>Consider this. You have two strains of mice, a wild type (WT) and a knockout. Your hypothesis is that while in the WT the regulation of a cytokine production works correctly and the cytokine gets produced upon stimulation, the regulation is broken in the KO. You plan your experiment as follows: for each of the mouse strains, you have a control (Ctrl) and a treatment (Trt) group, and your response variable is the level of the cytokine you have measured.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 41%">
+<col style="width: 39%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Control</strong></th>
+<th><strong>Treatment</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wildtype (WT)</td>
+<td>Ctrl<sub>WT</sub></td>
+<td>Trt<sub>WT</sub></td>
+<td><span class="math inline">\(\Delta\)</span><sub>WT</sub> = Trt<sub>WT</sub> - Ctrl<sub>WT</sub></td>
+</tr>
+<tr class="even">
+<td>Knockout (KO)</td>
+<td>Ctrl<sub>KO</sub></td>
+<td>Trt<sub>KO</sub></td>
+<td><span class="math inline">\(\Delta\)</span><sub>KO</sub> = Trt<sub>KO</sub> - Ctrl<sub>KO</sub></td>
+</tr>
+</tbody>
+</table>
 <p>Now to evaluate your experiment, you compare Ctrl with Trt in the WT strain and also in the KO strain. You have two comparisons: in WT (<span class="math inline">\(\Delta\)</span><sub>WT</sub> = Trt<sub>WT</sub> - Ctrl<sub>WT</sub>) and in KO (<span class="math inline">\(\Delta\)</span><sub>KO</sub> = Trt<sub>KO</sub> - Ctrl<sub>KO</sub>). In both cases, you run a t-test. You find that the p-value from the first comparison (<span class="math inline">\(\Delta\)</span><sub>WT</sub>) is significant (<span class="math inline">\(p &lt; 0.05\)</span>), and the p-value from the second comparison (<span class="math inline">\(\Delta\)</span><sub>KO</sub>) is not (<span class="math inline">\(p &gt; 0.05\)</span>). Does that mean that you confirmed your hypothesis? Can you say that there is no difference in KO, but there is a difference in WT?</p>
 <p>The short answer is: <strong>no, you can’t</strong>.</p>
 <p>You were able to show that there is a significant difference in the WT strain, but you <em>failed</em> to show that there is a difference in the KO. And failing to show a difference is not the same as showing <em>a lack</em> of difference. This is erronous reasoning is widely spread – a while ago a team of researchers looked at bunch of publications and found that almost half of the scientists that could make this error, did it.</p>
@@ -499,9 +568,8 @@ window.Quarto = {
 <h3 data-number="2.3.6" class="anchored" data-anchor-id="we-treat-p-values-with-too-much-reverence"><span class="header-section-number">2.3.6</span> We treat p-values with too much reverence</h3>
 <p>chasing of 0.05, p-value hacking and cherry picking</p>
 </section>
-</section>
-<section id="what-to-do-with-p-values" class="level1 page-columns page-full" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> What to do with p-values</h1>
+<section id="what-to-do-with-p-values" class="level3 page-columns page-full" data-number="2.3.7">
+<h3 data-number="2.3.7" class="anchored" data-anchor-id="what-to-do-with-p-values"><span class="header-section-number">2.3.7</span> What to do with p-values</h3>
 <p>In the previous sections I have shown many problems with p-values and their interpretation. So what should we do about them? Should we abandon them completely?</p>
 <p>This is neither possible nor advisable. Of course, you will find a multitude of views and opinions, also among statisticians. There are journals out there which <em>forbid</em> to publish p-values. However, while most statisticians don’t go so far, they more or less agree that p-values are at best useful, but severely limited tools.</p>
 
@@ -528,21 +596,116 @@ What to do about p-values
 </div>
 </div>
 </div>
-<p>XXX</p>
+</section>
+</section>
+<section id="effect-sizes-matter" class="level2 page-columns page-full" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="effect-sizes-matter"><span class="header-section-number">2.4</span> Effect sizes matter</h2>
+<section id="how-significant-is-statistically-significant" class="level3 page-columns page-full" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="how-significant-is-statistically-significant"><span class="header-section-number">2.4.1</span> How significant is “statistically significant”?</h3>
+<p>Did you know that astrology works? Well, sort of. How you look depends on your star sign! Um, actually, just to a small extent. In fact, what I mean is: your height depends on the date you were born. Specifically, there is a tiny, tiny, tiny difference of averages, much less than a centimeter, between people born at different times of year.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Height depends on month of birth <span class="citation" data-cites="weber1998height">(<a href="references.html#ref-weber1998height" role="doc-biblioref">Weber, Prossinger, and Seidler 1998</a>)</span></p>
+</div></div><p>Researchers from Austria looked at records of over half a million recruits from Austria (male and 18 year old) and found that there is an annual cycle: people born in April were tallest and people born in October were shortest – but the difference was only 6mm. That is not much, especially if you think about how much variance in height there is in humans! In the figure below you can see two distributions of height of the austrian recruits. One of them is for people who were born in October, the other for those who were born in April.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>I did not have access to actual data, however I have generated simulated data with identical properties as the original data.</p>
+</div></div><div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="dv">100000</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pop1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">177</span> <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">sd=</span><span class="dv">7</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pop2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">177</span> <span class="sc">-</span> <span class="fl">0.3</span>, <span class="at">sd=</span><span class="dv">7</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Height=</span><span class="fu">c</span>(pop1, pop2), <span class="st">"Birth Date"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"April"</span>, <span class="st">"October"</span>), <span class="at">each=</span>N))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">sample</span>(pop1, <span class="dv">5</span>), <span class="fu">sample</span>(pop2, <span class="dv">5</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>Height, <span class="at">fill=</span>.data[[<span class="st">"Birth Date"</span>]], <span class="at">color=</span>.data[[<span class="st">"Birth Date"</span>]])) <span class="sc">+</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line=</span><span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="dv">177</span><span class="fl">+0.3</span>, <span class="dv">177</span><span class="fl">-0.3</span>), <span class="at">color=</span><span class="fu">c</span>(<span class="st">"#F8766D"</span>, <span class="st">"#00BFC4"</span>), <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statistics_files/figure-html/astrology-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you were to run a t-test, you would find that the differences are “highly” <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> statistically significant, that is, the p-value is extremely low. However that is because we are looking at many people. If you were to draw five random individuals from the two populations (October and April), the p-value in a t-test would have been greater than 0.05 and we would conclude that the difference is not statistically significant.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Many statisticians don’t like to qualify the term “statistically significant”, arguing that either something is statistically significant or not.</p></div><div class="margin-aside">
+<p>Of course I <em>did</em> run a t-test on 5 randomly chosen individuals per group. The p-value was 0.86.</p>
+</div></div>
+<p>Now, the central question is: is the observed difference significant in more than just statistical sense? Is it significant for you, or for your research question? This is something that statistics cannot decide for you. Consider the following two cases.</p>
+<p>In the original publication the researchers observed that the cycle of the average recruit height follows the cycle of sun: the maximum duration of sunshine falls in July, and the minimum in January, a difference of about three months to the height cycle. Since body growth is fastest during the three months around birth (last three months of the pregnancy and three months after the birth), the authors conclude that the observed periodicity in body height is “due to influences extending from the time of late pregnancy to the first postnatal year”.</p>
+<p>A precise mechanism has not been proposed, but nonetheless the identified difference in average heights, albeit small, can be of importance for our understanding on how seasonal changes in environment, including sunlight exposure, interact with human physiology. As a side note – it has been also found that month of birth is related to your lifespan. In a study based on three countries, people who were born in spring or early summer (between April and June or September to December in Australia) live shorter than those born between October and December (or April to June in Australia).</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Lifespan depends on month of birth <span class="citation" data-cites="doblhammer2001lifespan">(<a href="references.html#ref-doblhammer2001lifespan" role="doc-biblioref">Doblhammer and Vaupel 2001</a>)</span></p>
+</div></div><p>However, consider another scenario. You found that there is a difference in height between recruits born in October and those born in April. Now what you would like to do is to predict the height of a recruit based on when the person was born. How well can you do that? Probability theory tells us that the average will be your best prediction, so for example if someone is born in October, you should predict that their height will be 176.7 cm, and if they are born in April, you should guess that they are 177.3 cm tall. This guarantees the lowest overall errors, but how good is it really?</p>
+<p>It turns out, as you may expect, that these predictions are not so good. On average, you will be guessing correctly, that is – the average of your guesses will match the average of the given group. However, for an individual person your errors will be huge - simply because the date of birth contributes really little to the overall variability of height. Not to mention that if you move to a different group of people – born in another decade or another country – your guesses will be completely off.</p>
+<p>The important lesson here is that given enough statistical power – that is, enough samples – you can detect even very small effects. Whether they are interesting or relevant to your question is another matter.</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>With sufficient statistical power, even tiny and negligible effects can be detected. Therefore, statistical significance is not the same as biological significance.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="is-the-difference-large-enough" class="level3 page-columns page-full" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="is-the-difference-large-enough"><span class="header-section-number">2.4.2</span> Is the difference large enough?</h3>
+<p>If you invest enough money, you will almost always be able to detect <em>some</em> differences, because in nature almost any two groups will be different. The question is whether the differences are large enough to matter. But how large is “large”?</p>
+<p>In statistics, a common measure of the differences between group or other estimated coefficients of interest is called an <em>effect size</em>. Effect sizes typically can give you an idea how big a given effect (difference, coefficient etc.) is relative to the variability of the data.</p>
+<p>By far the simplest and most commonly used measure of effect sizes is Cohen’s d.&nbsp;It also neatly illustrates the idea behind effect sizes. Cohen’s d is simply the difference between the averages divided by standard deviation of the data<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;In cases where the two groups compared have different standard deviations there is a special formula for pooled standard deviation.</p></div></div><p><span class="math inline">\(d = \frac{|\bar{x}_1 - \bar{x}_2|}{s}\)</span></p>
+<p>In other words, Cohen’s <span class="math inline">\(d\)</span> measure expresses the difference between the two groups in standard deviations.</p>
+<p>Anything for which <span class="math inline">\(d\)</span> is greater than about <span class="math inline">\(2\)</span> (group averages are more than two standard deviations apart) is considered to be a huge effect. Effects around 0.2 and below are considered to be very small. In the case of the practical astrology we had a difference of at most about 6mm and a standard deviation of about 7 cm, so the effect size is less than 0.1.</p>
+<p>There are many effect sizes for various applications. In high throughput data analysis in biomedicine we often use log<sub>2</sub> fold changes. Logarithmizing fold changes is a very useful operation, since it puts down-regulation and up-regulation on the same scale: rather than having to consider 2-fold change (increase) and 0.5 fold change (2-fold decrease), and 1 when there is no change, we have 1 for a two-fold increase, -1 for a two-fold decrease, and 0 when there is no change.</p>
+<p>Another frequently used effect size is <span class="math inline">\(r^2\)</span> (Pearson’s correlation coefficient, squared). It conveniently reports what percentage of the overall variability is shared between the two variables that we are trying to correlate. For example, if the correlation between gene expression of a certain gene and the disease severity is 0.7, then <span class="math inline">\(0.7^2 = 0.49\)</span> or almost 50% of the variability between gene expression and disease severity is shared and can be explained by a functional link between these two <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Whether the expression of the gene causes the disease severity or <em>vice versa</em> is not a question that can be answered easily.</p></div></div><p>In some areas of science, reporting effect sizes is widely spread. Can you imagine the results of a clinical trial being published without a respective effect size, such as an odd ratio (OR)?</p>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Every time you report a p-value from a test, you should also report a suitable effect size.</p>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-doblhammer2001lifespan" class="csl-entry" role="listitem">
+Doblhammer, Gabriele, and James W Vaupel. 2001. <span>“Lifespan Depends on Month of Birth.”</span> <em>Proceedings of the National Academy of Sciences</em> 98 (5): 2934–39.
+</div>
 <div id="ref-nieuwenhuis2011erroneous" class="csl-entry" role="listitem">
 Nieuwenhuis, Sander, Birte U Forstmann, and Eric-Jan Wagenmakers. 2011. <span>“Erroneous Analyses of Interactions in Neuroscience: A Problem of Significance.”</span> <em>Nature Neuroscience</em> 14 (9): 1105–7.
 </div>
 <div id="ref-wasserstein2016asa" class="csl-entry" role="listitem">
 Wasserstein, Ronald L, and Nicole A Lazar. 2016. <span>“The ASA Statement on p-Values: Context, Process, and Purpose.”</span> <em>The American Statistician</em>. Taylor &amp; Francis.
 </div>
+<div id="ref-weber1998height" class="csl-entry" role="listitem">
+Weber, Gerhard W, Hermann Prossinger, and Horst Seidler. 1998. <span>“Height Depends on Month of Birth.”</span> <em>Nature</em> 391 (6669): 754–55.
+</div>
 <div id="ref-weiner2022venn" class="csl-entry" role="listitem">
 Weiner 3rd, January, Benedikt Obermayer, and Dieter Beule. 2022. <span>“Venn Diagrams May Indicate Erroneous Statistical Reasoning in Transcriptomics.”</span> <em>Frontiers in Genetics</em> 13: 818683.
 </div>
 </div>
 </section>
+</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
