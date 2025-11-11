@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -81,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -227,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -248,6 +268,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>There is an old statistical joke that goes like this. Before you do anything else, perform the IOT test – the Intraocular Trauma Test. To this end, plot the data. If the conclusion hits you between the eyes, the results are significant.</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>The oldest reference I found for the IOT is from 1963 attributes it to Joseph Berkson <span class="citation" data-cites="edwards1963bayesian">(<a href="references.html#ref-edwards1963bayesian" role="doc-biblioref">Edwards, Lindman, and Savage 1963</a>)</span>, a famous statistician, known among others for describing the <a href="https://en.wikipedia.org/wiki/Berkson%27s_paradox">Berkson’s paradox</a> – spurious correlations caused by selection bias.</p>
+</div></div><p>In other words: quite often a good visualization is everything you need to show your point.</p>
+<p>Unfortunately, there is also an opposite side to this coin. We humans are incredebly adapt at finding patterns even where there are none. So if we can’t see our point on a diagram (e.g.&nbsp;difference between the groups on a box plot, or correlation on an x-y plot), then most likely there is no meaningful difference.</p>
+<p>Statistics is mostly useful for all the cases in between: where we can spot the difference when looking at the plot, but it is not so large as to cause the intraocular trauma.</p>
+<p>Since scientific and statistical illustrations play such a powerful role, a substantial part of your communication with your bioinformatitian will refer to the plots and figures they produce for you. As always, communication is the key, and having a common language helps. In this chapter, I will describe a few of the most common problems and misunderstandings.</p>
 <section id="show-the-data" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="show-the-data"><span class="header-section-number">6.1</span> Show the data!</h2>
 </section>
@@ -255,6 +283,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.2" class="anchored" data-anchor-id="avoid-bar-charts"><span class="header-section-number">6.2</span> Avoid bar charts</h2>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-edwards1963bayesian" class="csl-entry" role="listitem">
+Edwards, Ward, Harold Lindman, and Leonard J Savage. 1963. <span>“Bayesian Statistical Inference for Psychological Research.”</span> <em>Psychological Review</em> 70 (3): 193.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
