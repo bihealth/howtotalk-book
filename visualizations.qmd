@@ -1,0 +1,39 @@
+# Visualizing data
+
+There is an old statistical joke that goes like this. Before you do
+anything else, perform the IOT test – the Intraocular Trauma Test. To this
+end, plot the data. If the conclusion hits you between the eyes, the
+results are significant.
+
+::: {.aside}
+The oldest reference I found for the IOT is from 1963 attributes it to 
+Joseph Berkson [@edwards1963bayesian], a famous statistician, known among
+others for describing the 
+[Berkson's paradox](https://en.wikipedia.org/wiki/Berkson%27s_paradox) –
+spurious correlations caused by selection bias.
+:::
+
+In other words: quite often a good visualization is everything you need to
+show your point. 
+
+Unfortunately, there is also an opposite side to this coin. We humans are
+incredebly adapt at finding patterns even where there are none. So if we
+can't see our point on a diagram (e.g. difference between the groups on a
+box plot, or correlation on an x-y plot), then most likely there is no
+meaningful difference.
+
+Statistics is mostly useful for all the cases in between: where we can spot
+the difference when looking at the plot, but it is not so large as to cause
+the intraocular trauma.
+
+Since scientific and statistical illustrations play such a powerful role,
+a substantial part of your communication with your bioinformatitian will
+refer to the plots and figures they produce for you. As always,
+communication is the key, and having a common language helps. In this
+chapter, I will describe a few of the most common problems and
+misunderstandings.
+
+
+## Show the data!
+
+## Avoid bar charts

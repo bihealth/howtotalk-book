@@ -327,6 +327,11 @@ as follows: for each of the mouse strains, you have a control (Ctrl) and a
 treatment (Trt) group, and your response variable is the level of the
 cytokine you have measured. 
 
+|       | **Control**    | **Treatment**     |          |
+|-------|-------------------------------|-----------------------------|-------|
+| Wildtype (WT) | Ctrl~WT~  | Trt~WT~  | $\Delta$~WT~ = Trt~WT~ - Ctrl~WT~ 
+| Knockout (KO) | Ctrl~KO~  | Trt~KO~  | $\Delta$~KO~ = Trt~KO~ - Ctrl~KO~
+
 Now to evaluate your experiment, you compare Ctrl with Trt in the WT strain
 and also in the KO strain. You have two comparisons: in WT ($\Delta$~WT~ = Trt~WT~ -
 Ctrl~WT~) and in KO ($\Delta$~KO~ = Trt~KO~ - Ctrl~KO~). In both cases, you
@@ -451,7 +456,7 @@ chasing of 0.05, p-value hacking and cherry picking
 
 
 
-# What to do with p-values
+### What to do with p-values
 
 In the previous sections I have shown many problems with p-values and their
 interpretation. So what should we do about them? Should we abandon them
@@ -484,4 +489,188 @@ the test and the data.
 :::
 
 
-XXX
+## Effect sizes matter
+
+### How significant is "statistically significant"?
+
+Did you know that astrology works? Well, sort of. How you look depends on
+your star sign! Um, actually, just to a small extent. In fact, what I mean is:
+your height depends on the date you were born. Specifically, there is a
+tiny, tiny, tiny difference of averages, much less than a centimeter,
+between people born at different times of year. 
+
+::: {.aside}
+Height depends on month of birth [@weber1998height]
+:::
+
+Researchers from Austria looked at records of over half a million recruits
+from Austria (male and 18 year old) and found that there is an annual cycle: 
+people born in April were tallest and people born in October were shortest
+– but the difference was only 6mm. 
+That is not much, especially if you think about how much variance in height
+there is in humans!
+In the figure below you can see two
+distributions of height of the austrian recruits. One of them is for people
+who were born in October, the other for those who were born in April.
+
+::: {.aside}
+I did not have access to actual data, however I have generated simulated
+data with identical properties as the original data.
+:::
+
+
+```{r fig.width=15,fig.height=4}
+#| label: astrology
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+
+set.seed(12345)
+N<-100000
+pop1 <- rnorm(N, mean=177 + 0.3, sd=7)
+pop2 <- rnorm(N, mean=177 - 0.3, sd=7)
+df <- tibble(Height=c(pop1, pop2), "Birth Date"=rep(c("April", "October"), each=N))
+
+tt <- t.test(sample(pop1, 5), sample(pop2, 5))
+
+ggplot(df, aes(x=Height, fill=.data[["Birth Date"]], color=.data[["Birth Date"]])) + 
+  geom_density(alpha=0.2) + theme_cowplot() +
+  theme(axis.line=element_blank()) +
+  ylab("Density") + 
+  geom_vline(xintercept=c(177+0.3, 177-0.3), color=c("#F8766D", "#00BFC4"), linewidth=1, linetype="dashed")
+```
+
+If you were to run a t-test, you would find that the differences are
+"highly" [^highly] statistically significant, that is, the p-value is
+extremely low. However that is because we are looking at many people. If
+you were to draw five random individuals from the two populations (October
+and April), the p-value in a t-test would have been greater than 0.05 and
+we would conclude that the difference is not statistically significant.
+
+[^highly]: Many statisticians don't like to qualify the term "statistically
+significant", arguing that either something is statistically significant
+or not. 
+
+::: {.aside}
+Of course I *did* run a t-test on 5 randomly chosen individuals per group.
+The p-value was
+`r format.pval(tt$p.value, digits=2)`.
+:::
+
+Now, the central question is: is the observed difference significant in
+more than just statistical sense? Is it significant for you, or for your
+research question? This is something that statistics cannot decide for you.
+Consider the following two cases.
+
+In the original publication the researchers observed that the cycle of the
+average recruit height follows the cycle of sun: the maximum duration of
+sunshine falls in July, and the minimum in January, a difference of about
+three months to the height cycle. Since body growth is fastest during the
+three months around birth (last three months of the pregnancy and three
+months after the birth), the authors conclude that the observed periodicity
+in body height is "due to influences extending from the time of late
+pregnancy to the first postnatal year". 
+
+A precise mechanism has not been proposed,
+but nonetheless the identified difference in average heights, albeit small,
+can be of importance for our understanding on how seasonal changes in
+environment, including sunlight exposure, interact with human physiology.
+As a side note – it has been also found that month of birth is related to
+your lifespan. In a study based on three countries, people who were born 
+in spring or early summer (between April and June or September to December
+in Australia) live shorter than those born between October and December (or
+April to June in Australia). 
+
+::: {.aside}
+Lifespan depends on month of birth [@doblhammer2001lifespan]
+:::
+
+However, consider another scenario. You found that there is a difference in
+height between recruits born in October and those born in April. Now what
+you would like to do is to predict the height of a recruit based on when
+the person was born. How well can you do that? Probability theory tells us
+that the average will be your best prediction, so for example if someone is
+born in October, you should predict that their height will be 176.7 cm, and
+if they are born in April, you should guess that they are 177.3 cm tall.
+This guarantees the lowest overall errors, but how good is it really?
+
+It turns out, as you may expect, that these predictions are not so good. On
+average, you will be guessing correctly, that is – the average of your
+guesses will match the average of the given group. However, for an
+individual person your errors will be huge - simply because the date of
+birth contributes really little to the overall variability of height. Not
+to mention that if you move to a different group of people – born in
+another decade or another country – your guesses will be completely off.
+
+The important lesson here is that given enough statistical power – that is,
+enough samples – you can detect even very small effects. Whether they are
+interesting or relevant to your question is another matter.
+
+::: {.callout-important icon=false collapse=false appearance="simple"}
+With sufficient statistical power, even tiny and negligible effects can be detected.
+Therefore, statistical significance is not the same as biological
+significance.
+:::
+
+### Is the difference large enough?
+
+If you invest enough money, you will almost always be able to detect *some*
+differences, because in nature almost any two groups will be different. The
+question is whether the differences are large enough to matter. But how
+large is "large"? 
+
+In statistics, a common measure of the differences between group or other
+estimated coefficients of interest is called an *effect size*. Effect sizes
+typically can give you an idea how big a given effect (difference,
+coefficient etc.) is relative to the variability of the data.
+
+By far the simplest and most commonly used measure of effect sizes is
+Cohen's d. It also neatly illustrates the idea behind effect sizes. Cohen's
+d is simply the difference between the averages divided by standard
+deviation of the data[^sd]:
+
+[^sd]: In cases where the two groups compared have different standard
+deviations there is a special formula for pooled standard deviation.
+
+$d = \frac{|\bar{x}_1 - \bar{x}_2|}{s}$
+
+In other words, Cohen's $d$ measure expresses the difference between the
+two groups in standard deviations.
+
+Anything for which $d$ is greater than about $2$ (group averages are more
+than two standard deviations apart) is considered to be a huge effect.
+Effects around 0.2 and below are considered to be very small. In the case of the
+practical astrology we had a difference of at most about 6mm and a standard
+deviation of about 7 cm, so the effect size is less than 0.1.
+
+There are many effect sizes for various applications. In high throughput
+data analysis in biomedicine we often use log~2~ fold changes.
+Logarithmizing fold changes is a very useful operation, since it puts
+down-regulation and up-regulation on the same scale: rather than having
+to consider 2-fold change (increase) and 0.5 fold change (2-fold decrease),
+and 1 when there is no change, we have 1 for a two-fold increase, -1 for a
+two-fold decrease, and 0 when there is no change.
+
+Another frequently used effect size is $r^2$ (Pearson's correlation
+coefficient, squared). It conveniently reports what percentage of the
+overall variability is shared between the two variables that we are trying
+to correlate. For example, if the correlation between gene expression of a
+certain gene and the disease severity is 0.7, then $0.7^2 = 0.49$ or almost
+50% of the variability between gene expression and disease severity is
+shared and can be explained by a functional link between these two
+[^whether].
+
+[^whether]: Whether the expression of the gene causes the disease severity
+or *vice versa* is not a question that can be answered easily.
+
+In some areas of science, reporting effect sizes is widely spread. Can you
+imagine the results of a clinical trial being published without a
+respective effect size, such as an odd ratio (OR)? 
+
+::: {.callout-important icon=false collapse=false appearance="simple"}
+Every time you report a p-value from a test, you should also report a
+suitable effect size.
+:::
+
+
+
